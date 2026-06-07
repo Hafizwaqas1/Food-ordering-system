@@ -1,0 +1,24 @@
+.icon-fix {
+    position: relative; 
+    top:-2px;
+}
+
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color:brown !important;
+}
+.list-group-item:hover {
+    background-color: brown !important;
+    color: greenyellow !important;
+}
+#page-content-wrapper.with-sidebar {
+    margin-left: 250px;
+}
+
+#page-content-wrapper.full-width {
+    margin-left: 0px;
+}
