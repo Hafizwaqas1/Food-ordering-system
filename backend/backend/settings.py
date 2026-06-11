@@ -66,6 +66,10 @@ MIDDLEWARE = [
 
 CORS_ALLOW_ALL_ORIGINS = True
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://food-ordering-system-ns47l991a-hafizwaqas899-8012s-projects.vercel.app",
+]
+
 
 # ========================
 # URL CONFIG
