@@ -78,7 +78,7 @@ CORS_ALLOWED_ORIGINS = [
 #     "https://food-ordering-system-ns47l991a-hafizwaqas899-8012s-projects.vercel.app",
 # ]
 
-# CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_CREDENTIALS = True
 
 # CORS_ALLOW_HEADERS = [
 #     "content-type",
