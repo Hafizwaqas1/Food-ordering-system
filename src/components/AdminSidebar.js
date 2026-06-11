@@ -80,7 +80,7 @@ const AdminSidebar = () => {
             <Link to="/order-cancelled" className='list-group-item list-group-item-action bg-dark text-white border-0'>
                 Cancelled
             </Link>
-            <Link to="/all-foods" className='list-group-item list-group-item-action bg-dark text-white border-0'>
+            <Link to="/all-orders" className='list-group-item list-group-item-action bg-dark text-white border-0'>
                 All Orders
             </Link>
         </div>
