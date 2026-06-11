@@ -150,7 +150,7 @@ const Home = () => {
               <p className="text-center">No foods found</p>
             ) : (
               foods.map((food, index) => (
-                <div className="col-md-4 mb-4">
+                <div className="col-md-4 mb-4" key={food.id}>
                   <div className="card hovereffect">
                     <div className="position-relative">
                       <img
