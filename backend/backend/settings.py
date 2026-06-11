@@ -64,10 +64,24 @@ MIDDLEWARE = [
 # CORS
 # ========================
 
-CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOWED_ORIGINS = [
+    "https://food-ordering-system-ns47l991a-hafizwaqas899-8012s-projects.vercel.app",
+]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://food-ordering-system-ns47l991a-hafizwaqas899-8012s-projects.vercel.app",
+]
+
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_HEADERS = [
+    "content-type",
+    "authorization",
+    "accept",
+    "origin",
+    "x-requested-with",
 ]
 
 
