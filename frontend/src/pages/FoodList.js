@@ -21,13 +21,13 @@ const FoodList = () => {
 
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/manage-foods/")
+    fetch("https://hafiz899.pythonanywhere.com/api/manage-foods/")
       .then((res) => res.json())
       .then((data) => {
         setFoods(data);
         setFilteredFoods(data);
       });
-    fetch("http://127.0.0.1:8000/api/manage-category/")
+    fetch("https://hafiz899.pythonanywhere.com/api/manage-category/")
       .then((res) => res.json())
       .then((data) => {
         setCategories(data);
@@ -229,7 +229,7 @@ const FoodList = () => {
             <div className="col-md-4 mb-4">
               <div className="card hovereffect">
                 <img
-                  src={`http://127.0.0.1:8000${food.image}`}
+                  src={`https://hafiz899.pythonanywhere.com${food.image}`}
                   alt={food.name}
                   className="card-img-top"
                   style={{ height: "180px" }}

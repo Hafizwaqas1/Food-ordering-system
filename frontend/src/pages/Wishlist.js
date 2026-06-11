@@ -16,7 +16,7 @@ const Wishlist = () => {
 
     const fetchWishlist = async () => {
     if (userId) {
-      const res = await fetch(`http://127.0.0.1:8000/api/wishlist/${userId}`);
+      const res = await fetch(`https://hafiz899.pythonanywhere.com/api/wishlist/${userId}`);
       const data = await res.json();
       setWishlist(data);
     }
@@ -25,7 +25,7 @@ const Wishlist = () => {
   const removeFromWishlist = async (foodId) => {
   
       try {
-        const response = await fetch(`http://127.0.0.1:8000/api/wishlist/remove/`, {
+        const response = await fetch(`https://hafiz899.pythonanywhere.com/api/wishlist/remove/`, {
              method: "POST",
              headers: { "Content-Type": "application/json" },
              body: JSON.stringify({
@@ -36,7 +36,7 @@ const Wishlist = () => {
   
             if (response.ok) {
               
-              const updatedCount = await fetch(`http://127.0.0.1:8000/api/wishlist/${userId}`);
+              const updatedCount = await fetch(`https://hafiz899.pythonanywhere.com/api/wishlist/${userId}`);
               const wishlistData = await updatedCount.json();
               setWishlistCount(wishlistData.length);
   
@@ -70,7 +70,7 @@ const Wishlist = () => {
                          <div className="card hovereffect">
                            <div className="position-relative">
                              <img
-                             src={`http://127.0.0.1:8000${item.image}`}
+                             src={`https://hafiz899.pythonanywhere.com${item.image}`}
                              alt={item.name}
                              className="card-img-top"
                              style={{ height: "180px" }}

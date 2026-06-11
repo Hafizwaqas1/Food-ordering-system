@@ -4,7 +4,7 @@ const TopSellingProducts = () => {
     const [topFoods, setTopFoods] = useState([]);
     
         useEffect(() => {
-            fetch("http://127.0.0.1:8000/api/top-selling-foods/")
+            fetch("https://hafiz899.pythonanywhere.com/api/top-selling-foods/")
               .then((res) => res.json())
               .then((data) => {
                 setTopFoods(data);

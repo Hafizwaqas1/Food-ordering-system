@@ -15,7 +15,7 @@ const ManageFood = () => {
     const foodsPerPage = 6;
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/api/manage-foods/')
+        fetch('https://hafiz899.pythonanywhere.com/api/manage-foods/')
         .then(res => res.json())
         .then(data => {
             setFoods(data)
@@ -37,7 +37,7 @@ const ManageFood = () => {
 
     const handleDelete = (id) => {
             if (window.confirm("Are you sure you want to delete this food item?")) {
-                fetch(`http://127.0.0.1:8000/api/delete-food/${id}/`, {
+                fetch(`https://hafiz899.pythonanywhere.com/api/delete-food/${id}/`, {
                     method: 'DELETE',
     
                 })

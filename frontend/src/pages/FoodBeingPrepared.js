@@ -14,7 +14,7 @@ const FoodBeingPrepared = () => {
         navigate('/admin-login');
         return;
     }
-    fetch("http://127.0.0.1:8000/api/food_being_prepared/")
+    fetch("https://hafiz899.pythonanywhere.com/api/food_being_prepared/")
       .then((res) => res.json())
       .then((data) => {
         setOrders(data);

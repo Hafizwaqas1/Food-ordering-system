@@ -23,7 +23,7 @@ const TrackOrders = () => {
       const handleTrack = async (orderNum) => {
 
         try {
-              const response = await fetch(`http://127.0.0.1:8000/api/track-order/${orderNum}/`);
+              const response = await fetch(`https://hafiz899.pythonanywhere.com/api/track-order/${orderNum}/`);
         
                   if (response.ok) {
                        const data = await response.json();

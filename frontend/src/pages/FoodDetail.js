@@ -18,13 +18,13 @@ const FoodDetail = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`http://127.0.0.1:8000/api/foods/${id}/`)
+    fetch(`https://hafiz899.pythonanywhere.com/api/foods/${id}/`)
       .then((res) => res.json())
       .then((data) => {
         setFood(data);
       });
 
-    fetch(`http://127.0.0.1:8000/api/reviews/${id}/`)
+    fetch(`https://hafiz899.pythonanywhere.com/api/reviews/${id}/`)
       .then((res) => res.json())
       .then((data) => {
         setReviews(data);
@@ -37,7 +37,7 @@ const FoodDetail = () => {
     }
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/cart/add/", {
+      const response = await fetch("https://hafiz899.pythonanywhere.com/api/cart/add/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -81,8 +81,8 @@ const FoodDetail = () => {
     };
 
     const url = editId
-      ? `http://127.0.0.1:8000/api/review-edit-delete/${editId}/`
-      : `http://127.0.0.1:8000/api/reviews/add/${id}/`;
+      ? `https://hafiz899.pythonanywhere.com/api/review-edit-delete/${editId}/`
+      : `https://hafiz899.pythonanywhere.com/api/reviews/add/${id}/`;
     const method = editId ? "PUT" : "POST";
 
     try {
@@ -99,7 +99,7 @@ const FoodDetail = () => {
         setEditId(null);
 
         const updatedReviews = await fetch(
-          `http://127.0.0.1:8000/api/reviews/${id}/`,
+          `https://hafiz899.pythonanywhere.com/api/reviews/${id}/`,
         ).then((res) => res.json());
         setReviews(updatedReviews);
       } else {
@@ -112,7 +112,7 @@ const FoodDetail = () => {
   };
 
   const fetchReviews = async () => {
-    const res = await fetch(`http://127.0.0.1:8000/api/reviews/${id}/`);
+    const res = await fetch(`https://hafiz899.pythonanywhere.com/api/reviews/${id}/`);
     const data = await res.json();
     setReviews(data);
   };
@@ -121,7 +121,7 @@ const FoodDetail = () => {
     const confirmDelete = window.confirm('Are you sure to delete this review?');
     if (!confirmDelete) return;
 
-    const res = await fetch(`http://127.0.0.1:8000/api/review-edit-delete/${id}/`, {
+    const res = await fetch(`https://hafiz899.pythonanywhere.com/api/review-edit-delete/${id}/`, {
       method: 'DELETE',
     });
     if (res.ok) {
@@ -168,7 +168,7 @@ const FoodDetail = () => {
           <div className="col-md-5 text-center">
             <Zoom>
               <img
-                src={`http://127.0.0.1:8000${food.image}`}
+                src={`https://hafiz899.pythonanywhere.com${food.image}`}
                 alt={food.name}
                 style={{ width: "100%", height: "300px" }}
               />

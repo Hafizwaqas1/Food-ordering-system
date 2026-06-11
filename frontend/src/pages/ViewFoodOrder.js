@@ -17,7 +17,7 @@ const ViewFoodOrder = () => {
       return;
     }
 
-    fetch(`http://127.0.0.1:8000/api/view-order-detail/${orderNumber}/`)
+    fetch(`https://hafiz899.pythonanywhere.com/api/view-order-detail/${orderNumber}/`)
       .then((res) => res.json())
       .then((data) => {
         setData(data);
@@ -102,7 +102,7 @@ const ViewFoodOrder = () => {
                   <tr key={index}>
                     <td>
                       <img
-                        src={`http://127.0.0.1:8000${food.image}`}
+                        src={`https://hafiz899.pythonanywhere.com${food.image}`}
                         width="60"
                       />
                     </td>
@@ -153,7 +153,7 @@ const ViewFoodOrder = () => {
                 const status = e.target.status.value;
                 const remark = e.target.remark.value;
 
-                fetch("http://127.0.0.1:8000/api/update-order-status/", {
+                fetch("https://hafiz899.pythonanywhere.com/api/update-order-status/", {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify({

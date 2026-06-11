@@ -25,7 +25,7 @@ const SearchOrder = () => {
 
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/api/search-orders/?q=${searchTerm}`,);
+        `https://hafiz899.pythonanywhere.com/api/search-orders/?q=${searchTerm}`,);
 
       const data = await response.json();
         setOrders(data);

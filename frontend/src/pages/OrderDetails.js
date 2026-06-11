@@ -20,7 +20,7 @@ const OrderDetails = () => {
       navigate("/login");
       return;
     }
-    fetch(`http://127.0.0.1:8000/api/orders/by_order_number/${order_number}/`)
+    fetch(`https://hafiz899.pythonanywhere.com/api/orders/by_order_number/${order_number}/`)
       .then((res) => res.json())
       .then((data) => {
         setOrderItems(data);
@@ -31,7 +31,7 @@ const OrderDetails = () => {
         setTotal(totalAmount);
       });
 
-      fetch(`http://127.0.0.1:8000/api/orders/order_address/${order_number}/`)
+      fetch(`https://hafiz899.pythonanywhere.com/api/orders/order_address/${order_number}/`)
       .then((res) => res.json())
       .then((data) => {
         setOrderAddress(data);
@@ -52,7 +52,7 @@ const OrderDetails = () => {
                 <div className="row">
                   <div className="col-md-4">
                      <img
-                          src={`http://127.0.0.1:8000${item.food.image}`}
+                          src={`https://hafiz899.pythonanywhere.com${item.food.image}`}
                           alt={item.name}
                           className="img-fluid rounded"
                           style={{ minHeight: "200px", height:'250px', width:'100%' }}
@@ -81,7 +81,7 @@ const OrderDetails = () => {
                     <p><strong>Payment Mode:</strong><span className="badge bg-info text-dark ms-2"> {orderAddress.payment_mode}</span> </p>
                     <p><strong>Total:</strong> Rs. {total}</p>
 
-                    <a href={`http://127.0.0.1:8000/api/invoice/${order_number}`} target="_blank" className="btn btn-primary w-100 my-2">
+                    <a href={`https://hafiz899.pythonanywhere.com/api/invoice/${order_number}`} target="_blank" className="btn btn-primary w-100 my-2">
                         <i className="fas fa-file-invoice me-2"></i>
                         Invoice
                     </a>

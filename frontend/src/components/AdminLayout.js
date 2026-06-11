@@ -9,7 +9,7 @@ const AdminLayout = ({children}) => {
     const [newOrders, setNewOrders] = useState(0);
 
     useEffect(() => {
-                fetch("http://127.0.0.1:8000/api/dashboard-metrics/")
+                fetch("https://hafiz899.pythonanywhere.com/api/dashboard-metrics/")
                   .then((res) => res.json())
                   .then((data) => {
                     setNewOrders(data.new_orders);

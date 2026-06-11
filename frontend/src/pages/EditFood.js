@@ -26,12 +26,12 @@ const EditFood = () => {
       navigate("/admin-login");
       return;
     }
-    fetch(`http://127.0.0.1:8000/api/edit-food/${id}/`)
+    fetch(`https://hafiz899.pythonanywhere.com/api/edit-food/${id}/`)
       .then((res) => res.json())
       .then((data) => setFormData(data))
       .catch((err) => console.error(err));
 
-    fetch("http://127.0.0.1:8000/api/manage-category/")
+    fetch("https://hafiz899.pythonanywhere.com/api/manage-category/")
       .then((res) => res.json())
       .then((data) => setCategories(data))
       .catch((err) => console.error(err));
@@ -68,7 +68,7 @@ const EditFood = () => {
 
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/api/edit-food/${id}/`,
+        `https://hafiz899.pythonanywhere.com/api/edit-food/${id}/`,
         {
           method: "PUT",
           body: data,
@@ -194,7 +194,7 @@ const EditFood = () => {
                   </div>
                   <div className="col-md-6">
                     {formData.image && (
-                      <img src={`http://127.0.0.1:8000/${formData.image}`}
+                      <img src={`https://hafiz899.pythonanywhere.com/${formData.image}`}
                       className="img-fluid"
                       style={{maxHeight:'100px', padding:'4px', border:'1px solid red',
                         borderRadius:'8px'

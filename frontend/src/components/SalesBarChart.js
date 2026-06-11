@@ -5,7 +5,7 @@ const SalesBarChart = () => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        fetch("http://127.0.0.1:8000/api/monthly-sales-summary/")
+        fetch("https://hafiz899.pythonanywhere.com/api/monthly-sales-summary/")
           .then((res) => res.json())
           .then((data) => {
             setData(data);

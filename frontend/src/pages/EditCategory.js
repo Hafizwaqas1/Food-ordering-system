@@ -16,7 +16,7 @@ const EditCategory = () => {
       navigate("/admin-login");
       return;
     }
-    fetch(`http://127.0.0.1:8000/api/category-details/${id}/`)
+    fetch(`https://hafiz899.pythonanywhere.com/api/category-details/${id}/`)
       .then(res => res.json())
       .then(data => setCategoryName(data.category_name))
       .catch(err => console.error(err));  
@@ -25,7 +25,7 @@ const EditCategory = () => {
   const handleUpdate = (e) => {
     e.preventDefault();
 
-    fetch(`http://127.0.0.1:8000/api/category-details/${id}/`, {
+    fetch(`https://hafiz899.pythonanywhere.com/api/category-details/${id}/`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ category_name: categoryName }),

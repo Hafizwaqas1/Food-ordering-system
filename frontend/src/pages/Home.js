@@ -16,7 +16,7 @@ const Home = () => {
   const userId = localStorage.getItem("userId");
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/random_foods/")
+    fetch("https://hafiz899.pythonanywhere.com/api/random_foods/")
       .then((res) => res.json())
       .then((data) => {
         setFoods(data);
@@ -25,7 +25,7 @@ const Home = () => {
 
   useEffect(() => {
     if (userId) {
-      fetch(`http://127.0.0.1:8000/api/wishlist/${userId}`)
+      fetch(`https://hafiz899.pythonanywhere.com/api/wishlist/${userId}`)
         .then((res) => res.json())
         .then((data) => {
           const wishlistIds = data.map((item) => item.food_id);
@@ -39,7 +39,7 @@ const Home = () => {
       const allRatings = {};
       for (let food of foods) {
         const res = await fetch(
-          `http://127.0.0.1:8000/api/food-rating/${food.id}/`,
+          `https://hafiz899.pythonanywhere.com/api/food-rating/${food.id}/`,
         );
 
         const data = await res.json();
@@ -62,7 +62,7 @@ const Home = () => {
 
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/api/wishlist/${endpoint}/`,
+        `https://hafiz899.pythonanywhere.com/api/wishlist/${endpoint}/`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -79,7 +79,7 @@ const Home = () => {
         );
 
         const updatedCount = await fetch(
-          `http://127.0.0.1:8000/api/wishlist/${userId}`,
+          `https://hafiz899.pythonanywhere.com/api/wishlist/${userId}`,
         );
         const wishlistData = await updatedCount.json();
         setWishlistCount(wishlistData.length);
@@ -150,11 +150,11 @@ const Home = () => {
               <p className="text-center">No foods found</p>
             ) : (
               foods.map((food, index) => (
-                <div className="col-md-4 mb-4">
+                <div className="col-md-4 mb-4" key={food.id}>
                   <div className="card hovereffect">
                     <div className="position-relative">
                       <img
-                        src={`http://127.0.0.1:8000${food.image}`}
+                        src={`https://hafiz899.pythonanywhere.com${food.image}`}
                         alt={food.name}
                         className="card-img-top"
                         style={{ height: "180px" }}

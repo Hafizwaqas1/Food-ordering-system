@@ -19,7 +19,7 @@ const ManageReviews = () => {
       navigate("/admin-login");
       return;
     }
-    fetch("http://127.0.0.1:8000/api/all-reviews/")
+    fetch("https://hafiz899.pythonanywhere.com/api/all-reviews/")
       .then((res) => res.json())
       .then((data) => {
         setReviews(data);
@@ -28,7 +28,7 @@ const ManageReviews = () => {
 
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this review?")) {
-      fetch(`http://127.0.0.1:8000/api/delete-reviews/${id}/`, {
+      fetch(`https://hafiz899.pythonanywhere.com/api/delete-reviews/${id}/`, {
         method: "DELETE",
       })
         .then((res) => res.json())

@@ -14,7 +14,7 @@ const ManageCategory = () => {
   const categoriesPerPage = 5;
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/manage-category/")
+    fetch("https://hafiz899.pythonanywhere.com/api/manage-category/")
       .then((res) => res.json())
       .then((data) => {
         setCategories(data);
@@ -37,7 +37,7 @@ const ManageCategory = () => {
 
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this category?")) {
-      fetch(`http://127.0.0.1:8000/api/category-details/${id}/`, {
+      fetch(`https://hafiz899.pythonanywhere.com/api/category-details/${id}/`, {
         method: "DELETE",
       })
         .then((res) => res.json())

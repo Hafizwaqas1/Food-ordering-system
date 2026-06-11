@@ -15,7 +15,7 @@ const AddFood = () => {
   })
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/manage-category/")
+    fetch("https://hafiz899.pythonanywhere.com/api/manage-category/")
       .then((res) => res.json())
       .then((data) => {
         setCategories(data);
@@ -52,7 +52,7 @@ const AddFood = () => {
     data.append("image", formData.image);
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/add-food/", {
+      const response = await fetch("https://hafiz899.pythonanywhere.com/api/add-food/", {
         method: "POST",
         body: data
       });

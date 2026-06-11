@@ -14,7 +14,7 @@ const OrdersConfirmed = () => {
         navigate('/admin-login');
         return;
     }
-    fetch("http://127.0.0.1:8000/api/orders-confirmed/")
+    fetch("https://hafiz899.pythonanywhere.com/api/orders-confirmed/")
       .then((res) => res.json())
       .then((data) => {
         setOrders(data);

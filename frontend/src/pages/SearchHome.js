@@ -9,7 +9,7 @@ const SearchHome = () => {
 
   useEffect(() => {
     if (query) {
-      fetch(`http://127.0.0.1:8000/api/food_search/?q=${query}`)
+      fetch(`https://hafiz899.pythonanywhere.com/api/food_search/?q=${query}`)
         .then((res) => res.json())
         .then((data) => {
           setFoods(data);
@@ -29,7 +29,7 @@ const SearchHome = () => {
               <div className="col-md-4 mb-4">
                 <div className="card hovereffect">
                   <img
-                    src={`http://127.0.0.1:8000${food.image}`}
+                    src={`https://hafiz899.pythonanywhere.com${food.image}`}
                     alt={food.name}
                     className="card-img-top"
                     style={{ height: "180px" }}

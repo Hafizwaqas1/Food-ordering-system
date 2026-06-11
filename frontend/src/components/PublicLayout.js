@@ -31,7 +31,7 @@ const PublicLayout = ({ children }) => {
 
   const fetchCartCount = async () => {
     if (userId) {
-      const res = await fetch(`http://127.0.0.1:8000/api/cart/${userId}`);
+      const res = await fetch(`https://hafiz899.pythonanywhere.com/api/cart/${userId}`);
       const data = await res.json();
       setCartCount(data.length);
     }
@@ -39,7 +39,7 @@ const PublicLayout = ({ children }) => {
 
   const fetchWishlistCount = async () => {
     if (userId) {
-      const res = await fetch(`http://127.0.0.1:8000/api/wishlist/${userId}`);
+      const res = await fetch(`https://hafiz899.pythonanywhere.com/api/wishlist/${userId}`);
       const data = await res.json();
       setWishlistCount(data.length);
     }

@@ -19,7 +19,7 @@ const ManageUser = () => {
       navigate("/admin-login");
       return;
     }
-    fetch("http://127.0.0.1:8000/api/users/")
+    fetch("https://hafiz899.pythonanywhere.com/api/users/")
       .then((res) => res.json())
       .then((data) => {
         setUsers(data);
@@ -44,7 +44,7 @@ const ManageUser = () => {
 
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this user?")) {
-      fetch(`http://127.0.0.1:8000/api/delete-user/${id}/`, {
+      fetch(`https://hafiz899.pythonanywhere.com/api/delete-user/${id}/`, {
         method: "DELETE",
       })
         .then((res) => res.json())

@@ -52,7 +52,7 @@ const AdminDashboard = () => {
       navigate("/admin-login");
       return;
     }
-    fetch("http://127.0.0.1:8000/api/dashboard-metrics/")
+    fetch("https://hafiz899.pythonanywhere.com/api/dashboard-metrics/")
       .then((res) => res.json())
       .then((data) => {
         setMetrics(data);

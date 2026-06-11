@@ -27,7 +27,7 @@ const ProfilePage = () => {
   
       
       try {
-        const response = await fetch(`http://127.0.0.1:8000/api/user/update/${userId}/`, {
+        const response = await fetch(`https://hafiz899.pythonanywhere.com/api/user/update/${userId}/`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -56,7 +56,7 @@ const ProfilePage = () => {
       navigate("/login");
       return;
     }
-    fetch(`http://127.0.0.1:8000/api/user/${userId}/`)
+    fetch(`https://hafiz899.pythonanywhere.com/api/user/${userId}/`)
       .then((res) => res.json())
       .then((data) => {
         setFormData(data);

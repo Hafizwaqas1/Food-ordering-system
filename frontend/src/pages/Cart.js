@@ -19,7 +19,7 @@ const Cart = () => {
       navigate("/login");
       return;
     }
-    fetch(`http://127.0.0.1:8000/api/cart/${userId}`)
+    fetch(`https://hafiz899.pythonanywhere.com/api/cart/${userId}`)
       .then((res) => res.json())
       .then((data) => {
         setCartItems(data);
@@ -35,7 +35,7 @@ const Cart = () => {
     if (newQty < 1) return;
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/cart/update_quantity/", {
+      const response = await fetch("https://hafiz899.pythonanywhere.com/api/cart/update_quantity/", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -45,7 +45,7 @@ const Cart = () => {
       });
 
       if (response.status === 200) {
-        const updated = await fetch(`http://127.0.0.1:8000/api/cart/${userId}`)
+        const updated = await fetch(`https://hafiz899.pythonanywhere.com/api/cart/${userId}`)
         const data = await updated.json();
         setCartItems(data);
         setCartCount(data.length);
@@ -69,13 +69,13 @@ const Cart = () => {
     if (!confirmDelete) return;
 
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/cart/remove_cart_item/${orderId}/`, {
+      const response = await fetch(`https://hafiz899.pythonanywhere.com/api/cart/remove_cart_item/${orderId}/`, {
         method: "DELETE",
 
       });
 
       if (response.status === 200) {
-        const updated = await fetch(`http://127.0.0.1:8000/api/cart/${userId}`)
+        const updated = await fetch(`https://hafiz899.pythonanywhere.com/api/cart/${userId}`)
         const data = await updated.json();
         setCartItems(data);
         const total = data.reduce(
@@ -114,7 +114,7 @@ const Cart = () => {
                     <div className="row">
                       <div className="col-md-4">
                         <img
-                          src={`http://127.0.0.1:8000${item.food.image}`}
+                          src={`https://hafiz899.pythonanywhere.com${item.food.image}`}
                           alt={item.name}
                           className="img-fluid rounded-start"
                           style={{ minHeight: "200px" }}

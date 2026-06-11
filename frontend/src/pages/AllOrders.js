@@ -14,7 +14,7 @@ const AllOrders = () => {
         navigate('/admin-login');
         return;
     }
-    fetch("http://127.0.0.1:8000/api/all-foods/")
+    fetch("https://hafiz899.pythonanywhere.com/api/all-orders/")
       .then((res) => res.json())
       .then((data) => {
         setOrders(data);

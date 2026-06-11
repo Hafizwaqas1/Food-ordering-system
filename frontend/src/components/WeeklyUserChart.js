@@ -6,7 +6,7 @@ const WeeklyUserChart = () => {
     const [data, setData] = useState([]);
     
         useEffect(() => {
-            fetch("http://127.0.0.1:8000/api/weekly-user-registrations/")
+            fetch("https://hafiz899.pythonanywhere.com/api/weekly-user-registrations/")
               .then((res) => res.json())
               .then((data) => {
                 setData(data);

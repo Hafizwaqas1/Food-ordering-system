@@ -27,7 +27,7 @@ const ChangePassword = () => {
         return;
       }
       const response = await fetch(
-        `http://127.0.0.1:8000/api/change_password/${userId}/`,
+        `https://hafiz899.pythonanywhere.com/api/change_password/${userId}/`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
