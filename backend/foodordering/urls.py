@@ -42,7 +42,7 @@ urlpatterns = [
     path('foodpickup/', food_pickup),
     path('orders-delivered/', food_delivered),
     path('order-cancelled/', order_cancelled),
-    path('all-foods/', all_orders),
+    path('all-orders/', all_orders),
     path('order-between-dates/', order_reports),
     path('view-order-detail/<str:order_number>/', view_order_detail),
     path('update-order-status/', update_order_status),

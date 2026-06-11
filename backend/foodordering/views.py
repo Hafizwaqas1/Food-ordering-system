@@ -16,6 +16,7 @@ from collections import defaultdict
 from django.db.models.functions import TruncMonth, Coalesce, TruncWeek
 
 
+
 @api_view(['POST'])
 def admin_login_api(request):
     username = request.data.get('username')
