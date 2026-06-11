@@ -46,11 +46,9 @@ INSTALLED_APPS = [
 # ========================
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-
-    'corsheaders.middleware.CorsMiddleware',
-
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -64,25 +62,25 @@ MIDDLEWARE = [
 # CORS
 # ========================
 
-# CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = True
 
-CORS_ALLOWED_ORIGINS = [
-    "https://food-ordering-system-ns47l991a-hafizwaqas899-8012s-projects.vercel.app",
-]
+# CORS_ALLOWED_ORIGINS = [
+#     "https://food-ordering-system-ns47l991a-hafizwaqas899-8012s-projects.vercel.app",
+# ]
 
-CSRF_TRUSTED_ORIGINS = [
-    "https://food-ordering-system-ns47l991a-hafizwaqas899-8012s-projects.vercel.app",
-]
+# CSRF_TRUSTED_ORIGINS = [
+#     "https://food-ordering-system-ns47l991a-hafizwaqas899-8012s-projects.vercel.app",
+# ]
 
-CORS_ALLOW_CREDENTIALS = True
+# CORS_ALLOW_CREDENTIALS = True
 
-CORS_ALLOW_HEADERS = [
-    "content-type",
-    "authorization",
-    "accept",
-    "origin",
-    "x-requested-with",
-]
+# CORS_ALLOW_HEADERS = [
+#     "content-type",
+#     "authorization",
+#     "accept",
+#     "origin",
+#     "x-requested-with",
+# ]
 
 
 # ========================
