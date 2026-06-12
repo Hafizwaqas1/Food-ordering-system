@@ -45,7 +45,6 @@ INSTALLED_APPS = [
 # ========================
 
 MIDDLEWARE = [
-    "foodordering.middleware.SimpleCorsMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
@@ -65,7 +64,6 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     "https://food-ordering-system-h3c9.vercel.app",
     "http://localhost:3000",
-    "http://127.0.0.1:3000",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
