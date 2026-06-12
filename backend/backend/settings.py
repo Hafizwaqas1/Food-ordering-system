@@ -44,7 +44,8 @@ INSTALLED_APPS = [
 # MIDDLEWARE (IMPORTANT ORDER)
 # ========================
 
-MIDDLEWARE = [ 
+MIDDLEWARE = [
+    "foodordering.middleware.SimpleCorsMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
