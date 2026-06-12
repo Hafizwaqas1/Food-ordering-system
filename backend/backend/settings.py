@@ -75,8 +75,8 @@ CORS_ALLOWED_ORIGINS = [
 # ]
 
 CSRF_TRUSTED_ORIGINS = [
-     "https://food-ordering-system-ns47l991a-hafizwaqas899-8012s-projects.vercel.app",
-     "https://hafiz899.pythonanywhere.com",
+    "https://food-ordering-system-h3c9.vercel.app",
+    "https://hafiz899.pythonanywhere.com",
 
  ]
 
