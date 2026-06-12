@@ -44,8 +44,7 @@ INSTALLED_APPS = [
 # MIDDLEWARE (IMPORTANT ORDER)
 # ========================
 
-MIDDLEWARE = [
-    "foodordering.middleware.SimpleCorsMiddleware", 
+MIDDLEWARE = [ 
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
@@ -74,6 +73,14 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_ALL_HEADERS = True
+
+CORS_ALLOW_HEADERS = [
+    "content-type",
+    "authorization",
+    "x-requested-with",
+]
 
 
 # ========================
