@@ -64,7 +64,7 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
      "http://localhost:3000",
      "http://127.0.0.1:3000",
-     "https://food-ordering-system-doq4q34ys-hafizwaqas899-8012s-projects.vercel.app",
+     "https://food-ordering-system-h3c9.vercel.app",
     ]
 
 # CORS_ALLOW_ALL_ORIGINS = True
