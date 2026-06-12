@@ -5,8 +5,10 @@ class SimpleCorsMiddleware:
     def __call__(self, request):
         response = self.get_response(request)
 
-        response["Access-Control-Allow-Origin"] = "https://food-ordering-system-h3c9.vercel.app"
-        response["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS, PUT, DELETE"
-        response["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+        response["Access-Control-Allow-Origin"] = "*"
+        response["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
+        response["Access-Control-Allow-Headers"] = "Content-Type"
+
+        print("CORS MIDDLEWARE RUNNING")  # DEBUG LINE
 
         return response
