@@ -61,33 +61,18 @@ MIDDLEWARE = [
 # CORS
 # ========================
 
-# CORS_ALLOWED_ORIGINS = [
-#      "http://localhost:3000",
-#      "http://127.0.0.1:3000",
-#      "https://food-ordering-system-h3c9.vercel.app",
-#     ]
+CORS_ALLOWED_ORIGINS = [
+    "https://food-ordering-system-h3c9.vercel.app",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
 
-CORS_ALLOW_ALL_ORIGINS = True
+CSRF_TRUSTED_ORIGINS = [
+    "https://food-ordering-system-h3c9.vercel.app",
+    "https://hafiz899.pythonanywhere.com",
+]
 
-# CORS_ALLOWED_ORIGINS = [
-#     "https://food-ordering-system-ns47l991a-hafizwaqas899-8012s-projects.vercel.app",
-# ]
-
-# CSRF_TRUSTED_ORIGINS = [
-#     "https://food-ordering-system-h3c9.vercel.app",
-#     "https://hafiz899.pythonanywhere.com",
-
-#  ]
-
-# CORS_ALLOW_CREDENTIALS = True
-
-# CORS_ALLOW_HEADERS = [
-#     "content-type",
-#     "authorization",
-#     "accept",
-#     "origin",
-#     "x-requested-with",
-# ]
+CORS_ALLOW_CREDENTIALS = True
 
 
 # ========================
