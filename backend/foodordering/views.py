@@ -14,6 +14,8 @@ from datetime import datetime
 from decimal import Decimal
 from collections import defaultdict
 from django.db.models.functions import TruncMonth, Coalesce, TruncWeek
+from django.http import JsonResponse
+
 
 
 
@@ -135,6 +137,13 @@ def random_foods(request):
     limited_foods = foods[0:9]
     serializer = FoodSerializer(limited_foods,many=True) 
     return Response(serializer.data)
+
+
+def options_response(request):
+    response = JsonResponse({})
+    response["Access-Control-Allow-Origin"] = "*"
+    response["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
+    return response
 
 
 
