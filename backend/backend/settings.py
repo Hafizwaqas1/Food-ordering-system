@@ -79,6 +79,9 @@ CSRF_TRUSTED_ORIGINS = [
     "https://food-ordering-system-h3c9.vercel.app",
 ]
 
+CORS_ALLOW_ALL_ORIGINS = True
+print("SETTINGS FILE LOADED")
+
 # ========================
 # URL CONFIG
 # ========================
