@@ -140,7 +140,7 @@ def random_foods(request):
 
 from django.http import JsonResponse
 
-def random_foods(request):
+def random_foods1(request):
     response = JsonResponse({"test": "cors"})
     response["Access-Control-Allow-Origin"] = "*"
     return response
