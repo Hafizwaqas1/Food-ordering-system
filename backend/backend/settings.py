@@ -17,9 +17,10 @@ SECRET_KEY = 'django-insecure-tss-wsy&yyxy3y5imrpgc5$%hm(s5+g9-^fi8tonnno3*qeogw
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    "hafiz899.pythonanywhere.com",
-    "127.0.0.1",
-    "localhost",
+        "hafiz899.pythonanywhere.com",
+        "www.hafiz899.pythonanywhere.com",
+        "127.0.0.1",
+        "localhost",
 ]
 
 
@@ -73,9 +74,21 @@ CORS_ALLOWED_ORIGINS = [
 
 CORS_ALLOW_CREDENTIALS = True
 
-CSRF_TRUSTED_ORIGINS = [
-    "https://food-ordering-system-h3c9.vercel.app",
+CORS_ALLOW_HEADERS = [
+    "content-type",
+    "authorization",
+    "x-csrftoken",
 ]
+
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+]
+
 # ========================
 # URL CONFIG
 # ========================
