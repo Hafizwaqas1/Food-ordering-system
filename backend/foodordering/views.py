@@ -129,19 +129,14 @@ def food_search(request):
     return Response(serializer.data)
 
 
-# @api_view(['GET'])
-# def random_foods(request):
-#     foods = list(Food.objects.all())
-#     random.shuffle(foods)
-#     limited_foods = foods[0:9]
-#     serializer = FoodSerializer(limited_foods,many=True) 
-#     return Response(serializer.data)
-
-from django.http import JsonResponse
-
 @api_view(['GET'])
 def random_foods(request):
-    return JsonResponse({"status": "WORKING"})
+     foods = list(Food.objects.all())
+     random.shuffle(foods)
+     limited_foods = foods[0:9]
+     serializer = FoodSerializer(limited_foods,many=True) 
+     return Response(serializer.data)
+
 
 
 
