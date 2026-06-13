@@ -70,13 +70,10 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
 ]
 
-CSRF_TRUSTED_ORIGINS = [
-    "https://food-ordering-system-h3c9.vercel.app",
-    "https://hafiz899.pythonanywhere.com",
-]
-
 CORS_ALLOW_CREDENTIALS = True
 
+CORS_ALLOW_ALL_HEADERS = True
+CORS_ALLOW_ALL_METHODS = True
 
 
 # ========================
