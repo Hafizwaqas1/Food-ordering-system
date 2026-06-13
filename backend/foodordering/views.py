@@ -139,6 +139,7 @@ def food_search(request):
 
 from django.http import JsonResponse
 
+@api_view(['GET'])
 def random_foods(request):
     return JsonResponse({"status": "WORKING"})
 
