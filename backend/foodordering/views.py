@@ -138,11 +138,11 @@ def food_search(request):
 #     return Response(serializer.data)
 
 from django.http import JsonResponse
-
 @api_view(['GET'])
 def random_foods(request):
-    return JsonResponse({"status": "WORKING"})
-
+     response = JsonResponse({"test": "cors"})
+     response["Access-Control-Allow-Origin"] = "*"
+     return response
 
 
 
