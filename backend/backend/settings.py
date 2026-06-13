@@ -69,6 +69,7 @@ MIDDLEWARE = [
 CORS_ALLOW_ALL_ORIGINS = False
 
 CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
     "https://food-ordering-system-h3c9.vercel.app",
 ]
 
