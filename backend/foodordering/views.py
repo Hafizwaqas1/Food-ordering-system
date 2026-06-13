@@ -138,6 +138,14 @@ def random_foods(request):
     return Response(serializer.data)
 
 
+from django.http import JsonResponse
+
+def random_foods(request):
+    response = JsonResponse({"test": "cors"})
+    response["Access-Control-Allow-Origin"] = "*"
+    return response
+
+
 
 @api_view(['POST'])
 def register_user(request):
