@@ -19,7 +19,7 @@ urlpatterns = [
     path('edit-food/<int:id>/', edit_food),
     path('food_search/', food_search),
     path('random_foods/', random_foods),
-    path('random-foods1/', random_foods1),
+    # path('random-foods1/', random_foods1),
     path('register/', register_user),
     path('login/', login_user),
     path('foods/<int:id>/', food_detail),
