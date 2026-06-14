@@ -1,5 +1,3 @@
-raise Exception("TEST VIEWS FILE LOADED")
-
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import authenticate
 from rest_framework.decorators import api_view, parser_classes
@@ -142,9 +140,9 @@ def food_search(request):
 from django.http import JsonResponse
 @api_view(['GET'])
 def random_foods(request):
-    return JsonResponse({
-        "DEBUG_TEST": "VIEW CHANGED AT 2026-06-14"
-    })
+    response = JsonResponse({"status": "ok"})
+    response["Access-Control-Allow-Origin"] = "https://food-ordering-system-h3c9.vercel.app"
+    return response
 
 
 
