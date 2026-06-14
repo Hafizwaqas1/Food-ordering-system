@@ -139,7 +139,10 @@ def food_search(request):
 
 @api_view(['GET'])
 def random_foods(request):
-    return Response({"NEW_VERSION": "12345"})
+    return Response({
+        "debug": "NEW CODE IS RUNNING",
+        "time": str(datetime.now())
+    })
 
 
 @api_view(['POST'])
