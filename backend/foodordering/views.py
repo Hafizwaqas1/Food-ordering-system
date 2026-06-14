@@ -139,7 +139,8 @@ def food_search(request):
 
 @api_view(['GET'])
 def random_foods(request):
-    1/0
+    return Response({"NEW_VERSION": "12345"})
+
 
 @api_view(['POST'])
 def register_user(request):
