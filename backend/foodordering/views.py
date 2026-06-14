@@ -137,13 +137,11 @@ def food_search(request):
 #     serializer = FoodSerializer(limited_foods,many=True) 
 #     return Response(serializer.data)
 
-from django.http import JsonResponse
 @api_view(['GET'])
 def random_foods(request):
-    response = JsonResponse({"status": "ok"})
-    response["Access-Control-Allow-Origin"] = "https://food-ordering-system-h3c9.vercel.app"
-    return response
-
+    return Response({
+        "message": "PYTHONANYWHERE TEST"
+    })
 
 
 @api_view(['POST'])
