@@ -139,10 +139,7 @@ def food_search(request):
 
 @api_view(['GET'])
 def random_foods(request):
-    return Response({
-        "message": "PYTHONANYWHERE TEST"
-    })
-
+    1/0
 
 @api_view(['POST'])
 def register_user(request):
