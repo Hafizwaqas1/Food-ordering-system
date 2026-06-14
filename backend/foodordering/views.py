@@ -1,3 +1,5 @@
+raise Exception("TEST VIEWS FILE LOADED")
+
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import authenticate
 from rest_framework.decorators import api_view, parser_classes
