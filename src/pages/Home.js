@@ -15,13 +15,13 @@ const Home = () => {
 
   const userId = localStorage.getItem("userId");
 
-  useEffect(() => {
-    fetch("https://hafiz899.pythonanywhere.com/api/random_foods/")
-      .then((res) => res.json())
-      .then((data) => {
-        setFoods(data);
-      });
-  }, []);
+ useEffect(() => {
+  fetch("https://hafiz899.pythonanywhere.com/api/random_foods/", {
+    cache: "no-store"
+  })
+    .then(res => res.json())
+    .then(data => setFoods(data));
+}, []);
 
   useEffect(() => {
     if (userId) {
