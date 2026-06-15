@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import "../styles/home.css";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useWishlist } from "../context/WishlistContext";
 
 const FoodList = () => {
@@ -186,6 +188,7 @@ const FoodList = () => {
 
   return (
     <PublicLayout>
+      <ToastContainer position="top-center" autoClose={2000} />
         <div className="container py-5">
             <h2 className="text-center mb-4 text-danger">Find Your Delicious Food Here...</h2>
             <div className="row mb-4">
@@ -292,6 +295,20 @@ const FoodList = () => {
                   className="card-img-top"
                   style={{ height: "180px" }}
                 />
+                <i
+                        className={`${wishlist.includes(food.id) ? "fas" : "far"} fa-heart heart-icon position-absolute top-0 end-0 m-2 text-danger`}
+                        style={{
+                          cursor: "pointer",
+                          background: "white",
+                          width: "30px",
+                          height: "30px",
+                          borderRadius: "50%",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                        onClick={() => toggleWishlist(food.id)}
+                      ></i>
                 <div className="card-body">
                   <h5 className="card-title">
                     <Link to={`/food/${food.id}`}>{food.item_name}</Link>
