@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import "../styles/home.css";
+import { useWishlist } from "../context/WishlistContext";
 
 const FoodList = () => {
   const [foods, setFoods] = useState([]);
@@ -15,6 +16,9 @@ const FoodList = () => {
   const [maxPrice, setMaxPrice] = useState(2000);
   const [sortBy, setSortBy] = useState("relevance");
   const [currentPage, setCurrentPage] = useState(1);
+  const [wishlist, setWishlist] = useState([]);
+  const { wishlistCount, setWishlistCount } = useWishlist();
+  const userId = localStorage.getItem("userId");
 
   const foodsPerPage = 9;
 
@@ -33,6 +37,60 @@ const FoodList = () => {
         setCategories(data);
       });
   }, []);
+
+  useEffect(() => {
+      if (userId) {
+        fetch(`https://hafiz899.pythonanywhere.com/api/wishlist/${userId}`)
+          .then((res) => res.json())
+          .then((data) => {
+            const wishlistIds = data.map((item) => item.food_id);
+            setWishlist(wishlistIds);
+          });
+      }
+    }, [userId]);
+
+    const toggleWishlist = async (foodId) => {
+        if (!userId) {
+          toast.info("Please logged in!");
+          return;
+        }
+        const isWishlisted = wishlist.includes(foodId);
+        const endpoint = isWishlisted ? "remove" : "add";
+    
+        try {
+          const response = await fetch(
+            `https://hafiz899.pythonanywhere.com/api/wishlist/${endpoint}/`,
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                user_id: userId,
+                food_id: foodId,
+              }),
+            },
+          );
+    
+          if (response.ok) {
+            setWishlist((prev) =>
+              isWishlisted ? prev.filter((id) => id !== foodId) : [...prev, foodId],
+            );
+    
+            const updatedCount = await fetch(
+              `https://hafiz899.pythonanywhere.com/api/wishlist/${userId}`,
+            );
+            const wishlistData = await updatedCount.json();
+            setWishlistCount(wishlistData.length);
+    
+            toast.success(
+              isWishlisted ? "Remove from wishlist" : "Add to wishlist",
+            );
+          } else {
+            toast.error("Failed to update wishlist");
+          }
+        } catch (error) {
+          toast.error("Something went wrong");
+        }
+      };
 
   const handleSearch = (e) => {
     e.preventDefault();
