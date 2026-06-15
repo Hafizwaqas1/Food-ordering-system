@@ -194,7 +194,7 @@ const EditFood = () => {
                   </div>
                   <div className="col-md-6">
                     {formData.image && (
-                      <img src={`https://hafiz899.pythonanywhere.com/${formData.image}`}
+                      <img src={`https://hafiz899.pythonanywhere.com/media/${formData.image}`}
                       className="img-fluid"
                       style={{maxHeight:'100px', padding:'4px', border:'1px solid red',
                         borderRadius:'8px'

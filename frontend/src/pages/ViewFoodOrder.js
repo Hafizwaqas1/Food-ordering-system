@@ -102,7 +102,7 @@ const ViewFoodOrder = () => {
                   <tr key={index}>
                     <td>
                       <img
-                        src={`https://hafiz899.pythonanywhere.com${food.image}`}
+                        src={`https://hafiz899.pythonanywhere.com/media/${food.image}`}
                         width="60"
                       />
                     </td>

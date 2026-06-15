@@ -229,7 +229,7 @@ const FoodList = () => {
             <div className="col-md-4 mb-4">
               <div className="card hovereffect">
                 <img
-                  src={`https://hafiz899.pythonanywhere.com${food.image}`}
+                  src={`https://hafiz899.pythonanywhere.com/media/${food.image}`}
                   alt={food.name}
                   className="card-img-top"
                   style={{ height: "180px" }}
