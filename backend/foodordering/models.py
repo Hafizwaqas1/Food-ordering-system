@@ -75,20 +75,38 @@ class FoodTracking(models.Model):
     
 
 
+# class PaymentDetail(models.Model):
+#     PAYMENT_CHOICES = [
+#         ('cod', 'Cash on Delivery'),
+#         ('online', 'Online Payment')
+#     ]
+#     user = models.ForeignKey(User,on_delete=models.CASCADE)
+#     order_number = models.CharField(max_length=100,null=True)
+#     payment_mode = models.CharField(max_length=20,choices=PAYMENT_CHOICES)
+#     card_number = models.CharField(max_length=20,null=True,blank=True)
+#     expiry_date = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+#     cvv = models.CharField(max_length=5,null=True,blank=True)
+#     payment_date = models.DateTimeField(auto_now_add=True)
+
+    
+#     def __str__(self):
+#         return f"{self.order_number} ({self.payment_mode})"
+
 class PaymentDetail(models.Model):
     PAYMENT_CHOICES = [
         ('cod', 'Cash on Delivery'),
         ('online', 'Online Payment')
     ]
-    user = models.ForeignKey(User,on_delete=models.CASCADE)
-    order_number = models.CharField(max_length=100,null=True)
-    payment_mode = models.CharField(max_length=20,choices=PAYMENT_CHOICES)
-    card_number = models.CharField(max_length=20,null=True,blank=True)
-    expiry_date = models.DateTimeField(auto_now_add=True,null=True,blank=True)
-    cvv = models.CharField(max_length=5,null=True,blank=True)
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    order_number = models.CharField(max_length=100, null=True)
+    payment_mode = models.CharField(max_length=20, choices=PAYMENT_CHOICES)
+
+    stripe_payment_id = models.CharField(max_length=255, null=True, blank=True)
+    payment_status = models.CharField(max_length=50, default='pending')
+
     payment_date = models.DateTimeField(auto_now_add=True)
 
-    
     def __str__(self):
         return f"{self.order_number} ({self.payment_mode})"
     

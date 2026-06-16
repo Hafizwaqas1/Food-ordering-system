@@ -12,6 +12,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY
 # ========================
 
+import os
+
+STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
+STRIPE_PUBLIC_KEY = "pk_test_51SJWzDHFB4q3CuB6HVtp7VxMEiYRStDCndFXFisoN3kRPcKWdLtq6vzLDPbDbXG0GpTzr40sGjjM3tIYOstsTTys00TrIqhSqH"
+
 SECRET_KEY = 'django-insecure-tss-wsy&yyxy3y5imrpgc5$%hm(s5+g9-^fi8tonnno3*qeogw'
 
 DEBUG = False
