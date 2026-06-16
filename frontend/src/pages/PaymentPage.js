@@ -112,7 +112,7 @@ const PaymentPage = () => {
     if (paymentMode === "online") {
       try {
         const res = await fetch(
-          "https://hafiz899.pythonanywhere.com/api/payments/create-session/",
+          "https://hafiz899.pythonanywhere.com/api/create-session/",
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
