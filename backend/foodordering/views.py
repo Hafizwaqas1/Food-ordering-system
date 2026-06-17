@@ -302,8 +302,8 @@ from rest_framework.response import Response
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
-@api_view(['POST'])
-def create_checkout_session(request):
+# @api_view(['POST'])
+# def create_checkout_session(request):
     user_id = request.data.get('userId')
 
     try:
