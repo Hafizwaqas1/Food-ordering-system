@@ -12,7 +12,7 @@ const Success = () => {
 
       try {
         const response = await fetch(
-          "https://hafiz899.pythonanywhere.com/api/payments/confirm/",
+          "https://hafiz899.pythonanywhere.com/api/confirm/",
           {
             method: "POST",
             headers: {
