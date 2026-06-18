@@ -99,7 +99,7 @@ ROOT_URLCONF = 'backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR.parent / "frontend/build"],
+        'DIRS': [BASE_DIR.parent / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -162,8 +162,8 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 STATICFILES_DIRS = [
-    BASE_DIR / "frontend/build/static"
-] if (BASE_DIR / "frontend/build/static").exists() else []
+    BASE_DIR / "static"
+]
 
 # IMPORTANT FOR DJANGO ADMIN + WHITENOISE
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
