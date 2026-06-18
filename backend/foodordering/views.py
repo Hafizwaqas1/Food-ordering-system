@@ -299,38 +299,7 @@ from django.conf import settings
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-stripe.api_key = settings.STRIPE_SECRET_KEY
-
-
-# @api_view(['POST'])
-# def create_checkout_session(request):
-#     user_id = request.data.get('userId')
-
-#     try:
-#         session = stripe.checkout.Session.create(
-#             payment_method_types=['card'],
-#             mode='payment',
-#             line_items=[
-#                 {
-#                     'price_data': {
-#                         'currency': 'usd',
-#                         'product_data': {
-#                             'name': 'Food Order Payment',
-#                         },
-#                         'unit_amount': 1000,  # $10 = 1000 cents
-#                     },
-#                     'quantity': 1,
-#                 }
-#             ],
-
-#             success_url="https://your-vercel-app.vercel.app/success?session_id={CHECKOUT_SESSION_ID}",
-#             cancel_url="https://your-vercel-app.vercel.app/cancel",
-#         )
-
-#         return Response({"url": session.url})
-
-#     except Exception as e:
-#         return Response({"error": str(e)}, status=400)    
+# stripe.api_key = settings.STRIPE_SECRET_KEY    
     
 
 
