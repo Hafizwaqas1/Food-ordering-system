@@ -60,6 +60,6 @@ urlpatterns = [
     path('all-reviews/', all_reviews),
     path('delete-reviews/<int:id>/', delete_review),
 
-    path('create-session/', create_checkout_session),
+    # path('create-session/', create_checkout_session),
 
 ]
