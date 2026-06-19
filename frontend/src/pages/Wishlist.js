@@ -6,6 +6,7 @@ import "../styles/home.css";
 import { Link } from "react-router-dom";
 import { useWishlist } from "../context/WishlistContext";
 import { FaHeart } from "react-icons/fa";
+import { getImageUrl } from "../utils/imageUrl";
 
 
 const Wishlist = () => {
@@ -70,7 +71,7 @@ const Wishlist = () => {
                          <div className="card hovereffect">
                            <div className="position-relative">
                              <img
-                             src={`https://hafiz899.pythonanywhere.com${item.image}`}
+                             src={getImageUrl(item.image)}
                              alt={item.name}
                              className="card-img-top"
                              style={{ height: "180px" }}

@@ -5,6 +5,7 @@ import PublicLayout from "../components/PublicLayout";
 import { useNavigate } from "react-router-dom";
 import { FaMinus, FaPlus, FaShoppingCart, FaTrash } from "react-icons/fa";
 import { useCart } from "../context/CartContext";
+import { getImageUrl } from "../utils/imageUrl";
 
 const Cart = () => {
   const userId = localStorage.getItem("userId");
@@ -114,7 +115,7 @@ const Cart = () => {
                     <div className="row">
                       <div className="col-md-4">
                         <img
-                          src={`https://hafiz899.pythonanywhere.com${item.food.image}`}
+                          src={getImageUrl(item.food.image)}
                           alt={item.name}
                           className="img-fluid rounded-start"
                           style={{ minHeight: "200px" }}

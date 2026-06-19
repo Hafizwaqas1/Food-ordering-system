@@ -3,6 +3,7 @@ import AdminLayout from "../components/AdminLayout";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { getImageUrl } from "../utils/imageUrl";
 
 const ViewFoodOrder = () => {
   const { orderNumber } = useParams();
@@ -102,7 +103,7 @@ const ViewFoodOrder = () => {
                   <tr key={index}>
                     <td>
                       <img
-                        src={`https://hafiz899.pythonanywhere.com${food.image}`}
+                        src={getImageUrl(food.image)}
                         width="60"
                       />
                     </td>

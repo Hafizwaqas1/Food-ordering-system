@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import PublicLayout from "../components/PublicLayout";
 import { Link, useLocation } from "react-router-dom";
 import "../styles/home.css";
+import { getImageUrl } from "../utils/imageUrl";
 
 const SearchHome = () => {
   const query = new URLSearchParams(useLocation().search).get("q") || "";
@@ -29,7 +30,7 @@ const SearchHome = () => {
               <div className="col-md-4 mb-4">
                 <div className="card hovereffect">
                   <img
-                    src={`https://hafiz899.pythonanywhere.com${food.image}`}
+                    src={getImageUrl(food.image)}
                     alt={food.name}
                     className="card-img-top"
                     style={{ height: "180px" }}

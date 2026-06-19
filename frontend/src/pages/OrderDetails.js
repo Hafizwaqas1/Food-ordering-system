@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import PublicLayout from "../components/PublicLayout";
 import { useNavigate, useParams } from "react-router-dom";
 import CancelOrderModal from "../components/CancelOrderModal";
+import { getImageUrl } from "../utils/imageUrl";
 
 const OrderDetails = () => {
   const userId = localStorage.getItem("userId");
@@ -52,7 +53,7 @@ const OrderDetails = () => {
                 <div className="row">
                   <div className="col-md-4">
                      <img
-                          src={`https://hafiz899.pythonanywhere.com${item.food.image}`}
+                          src={getImageUrl(item.food.image)}
                           alt={item.name}
                           className="img-fluid rounded"
                           style={{ minHeight: "200px", height:'250px', width:'100%' }}

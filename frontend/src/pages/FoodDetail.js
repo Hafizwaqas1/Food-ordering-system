@@ -5,6 +5,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
+import { getImageUrl } from "../utils/imageUrl";
 
 const FoodDetail = () => {
   const userId = localStorage.getItem("userId");
@@ -168,7 +169,7 @@ const FoodDetail = () => {
           <div className="col-md-5 text-center">
             <Zoom>
               <img
-                src={`https://hafiz899.pythonanywhere.com${food.image}`}
+                src={getImageUrl(food.image)}
                 alt={food.name}
                 style={{ width: "100%", height: "300px" }}
               />

@@ -7,6 +7,7 @@ import "../styles/home.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useWishlist } from "../context/WishlistContext";
+import { getImageUrl } from "../utils/imageUrl";
 
 const FoodList = () => {
   const [foods, setFoods] = useState([]);
@@ -290,7 +291,7 @@ const FoodList = () => {
             <div className="col-md-4 mb-4">
               <div className="card hovereffect">
                 <img
-                  src={`https://hafiz899.pythonanywhere.com${food.image}`}
+                  src={getImageUrl(food.image)}
                   alt={food.name}
                   className="card-img-top"
                   style={{ height: "180px" }}

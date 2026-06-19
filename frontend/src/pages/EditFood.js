@@ -3,6 +3,7 @@ import AdminLayout from "../components/AdminLayout";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useParams, useNavigate } from "react-router-dom";
+import { getImageUrl } from "../utils/imageUrl";
 
 const EditFood = () => {
   const [categoryName, setCategoryName] = useState("");
@@ -194,7 +195,7 @@ const EditFood = () => {
                   </div>
                   <div className="col-md-6">
                     {formData.image && (
-                      <img src={`https://hafiz899.pythonanywhere.com${formData.image}`}
+                      <img src={getImageUrl(formData.image)}
                       className="img-fluid"
                       style={{maxHeight:'100px', padding:'4px', border:'1px solid red',
                         borderRadius:'8px'
