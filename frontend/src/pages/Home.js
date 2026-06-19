@@ -154,7 +154,8 @@ const Home = () => {
                   <div className="card hovereffect">
                     <div className="position-relative">
                       <img
-                        src={`https://hafiz899.pythonanywhere.com/media/${food.image}`}
+                        src={food.image ? `https://hafiz899.pythonanywhere.com/media/${food.image}`
+                        : "/default-food.png"}
                         alt={food.name}
                         className="card-img-top"
                         style={{ height: "180px" }}
