@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "../styles/home.css";
 import { Link } from "react-router-dom";
 import { useWishlist } from "../context/WishlistContext";
+import { getImageUrl } from "../utils/imageUrl";
 
 const Home = () => {
   const [foods, setFoods] = useState([]);
@@ -154,7 +155,7 @@ const Home = () => {
                   <div className="card hovereffect">
                     <div className="position-relative">
                       <img
-                        src={`https://hafiz899.pythonanywhere.com${food.image}`}
+                        src={getImageUrl(food.image)}
                         alt={food.name}
                         className="card-img-top"
                         style={{ height: "180px" }}
