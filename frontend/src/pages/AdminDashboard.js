@@ -57,7 +57,7 @@ const AdminDashboard = () => {
       .then((data) => {
         setMetrics(data);
       });
-  }, []);
+  }, [adminUser, navigate]);
   return (
     <AdminLayout>
       <div className="row g-3">
