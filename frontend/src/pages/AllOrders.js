@@ -19,7 +19,7 @@ const AllOrders = () => {
       .then((data) => {
         setOrders(data);
       });
-  }, [adminUser, navigate]);
+  }, []);
 
   // Search Functionality
 

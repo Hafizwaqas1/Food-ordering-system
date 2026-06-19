@@ -52,7 +52,7 @@ const PublicLayout = ({ children }) => {
       fetchCartCount();
       fetchWishlistCount();
     }
-  }, [userId, name, fetchCartCount, fetchWishlistCount]);
+  }, [userId, name]);
 
   const handleLogout = () => {
     localStorage.removeItem("userId");
