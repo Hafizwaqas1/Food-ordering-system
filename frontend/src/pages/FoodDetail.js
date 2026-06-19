@@ -168,7 +168,7 @@ const FoodDetail = () => {
           <div className="col-md-5 text-center">
             <Zoom>
               <img
-                src={`https://hafiz899.pythonanywhere.com/media/${food.image}`}
+                src={`https://hafiz899.pythonanywhere.com${food.image}`}
                 alt={food.name}
                 style={{ width: "100%", height: "300px" }}
               />

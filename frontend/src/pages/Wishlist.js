@@ -70,7 +70,7 @@ const Wishlist = () => {
                          <div className="card hovereffect">
                            <div className="position-relative">
                              <img
-                             src={`https://hafiz899.pythonanywhere.com/media/${item.image}`}
+                             src={`https://hafiz899.pythonanywhere.com${item.image}`}
                              alt={item.name}
                              className="card-img-top"
                              style={{ height: "180px" }}

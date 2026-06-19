@@ -114,7 +114,7 @@ const Cart = () => {
                     <div className="row">
                       <div className="col-md-4">
                         <img
-                          src={`https://hafiz899.pythonanywhere.com/media/${item.food.image}`}
+                          src={`https://hafiz899.pythonanywhere.com${item.food.image}`}
                           alt={item.name}
                           className="img-fluid rounded-start"
                           style={{ minHeight: "200px" }}
