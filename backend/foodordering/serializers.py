@@ -22,10 +22,10 @@ class FoodSerializer(serializers.ModelSerializer):
 
 
 class CartSerializer(serializers.ModelSerializer):
-    food = FoodSerializer()
+    food = FoodSerializer(read_only=True)
     class Meta:
         model = Order
-        fields = ['id', 'food', 'quantity']
+        fields = ['id', 'quantity']
 
 
 
