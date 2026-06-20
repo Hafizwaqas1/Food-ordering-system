@@ -208,41 +208,11 @@ def add_to_cart(request):
     
 
 
-# @api_view(['GET'])
-# def cart_items(request, user_id):
-#     orders = Order.objects.filter(user_id=user_id, is_order_placed=False).select_related('food')
-#     serializer = CartSerializer(orders,many=True) 
-#     return Response(serializer.data)
-
 @api_view(['GET'])
 def cart_items(request, user_id):
-    try:
-        user_id = int(user_id)
-
-        orders = Order.objects.filter(
-            user_id=user_id,
-            is_order_placed=False
-        ).select_related('food')
-
-        data = []
-
-        for o in orders:
-            if o.food:
-                data.append({
-                    "id": o.id,
-                    "food": {
-                        "id": o.food.id,
-                        "item_name": o.food.item_name,
-                        "item_price": o.food.item_price,
-                        "image": o.food.image.url if o.food.image else None
-                    },
-                    "quantity": o.quantity
-                })
-
-        return Response(data)
-
-    except Exception as e:
-        return Response({"error": str(e)}, status=500)
+    orders = Order.objects.filter(user_id=user_id, is_order_placed=False).select_related('food')
+    serializer = CartSerializer(orders,many=True) 
+    return Response(serializer.data)
 
 
 
