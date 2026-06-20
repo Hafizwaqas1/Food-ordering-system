@@ -211,7 +211,7 @@ def add_to_cart(request):
 @api_view(['GET'])
 def cart_items(request, user_id):
     orders = Order.objects.filter(user_id=user_id, is_order_placed=False).select_related('food')
-    serializer = CartSerializer(orders,many=True) 
+    serializer = CartSerializer(orders,many=True,  context={'request': request}) 
     return Response(serializer.data)
 
 

@@ -21,11 +21,29 @@ class FoodSerializer(serializers.ModelSerializer):
 
 
 
+# class CartSerializer(serializers.ModelSerializer):
+#     food = FoodSerializer()
+#     class Meta:
+#         model = Order
+#         fields = ['id', 'food', 'quantity']
+
 class CartSerializer(serializers.ModelSerializer):
-    food = FoodSerializer(read_only=True)
+
+    food_name = serializers.CharField(source='food.item_name')
+    food_price = serializers.CharField(source='food.item_price')
+    food_image = serializers.SerializerMethodField()
+
+    def get_food_image(self, obj):
+        try:
+            request = self.context.get('request')
+            if obj.food.image:
+                return request.build_absolute_uri(obj.food.image.url)
+        except:
+            return None
+
     class Meta:
         model = Order
-        fields = ['id', 'quantity']
+        fields = ['id', 'food_name', 'food_price', 'food_image', 'quantity']
 
 
 
