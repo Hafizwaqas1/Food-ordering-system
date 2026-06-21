@@ -43,7 +43,6 @@ const Login = () => {
           });
     
           const result = await response.json();
-          console.log("LOGIN RESPONSE:", result);
            
           if (response.status === 200) {
             toast.success(result.message || "You have successfully login");
