@@ -290,15 +290,7 @@ def place_order(request):
         return Response({"message":f'Order placed successfully! Order No: {order_number}'},status=201)
     except:
                 return Response({"message":"Something went wrong",},status=404)
-    
-
-
-import stripe
-from django.conf import settings
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-
-# stripe.api_key = settings.STRIPE_SECRET_KEY    
+       
     
 
 
