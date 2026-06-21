@@ -20,30 +20,13 @@ class FoodSerializer(serializers.ModelSerializer):
         fields = ['id', 'category', 'category_name', 'item_name', 'item_price', 'item_description', 'image', 'item_quantity', 'is_available'] 
 
 
-
-# class CartSerializer(serializers.ModelSerializer):
-#     food = FoodSerializer()
-#     class Meta:
-#         model = Order
-#         fields = ['id', 'food', 'quantity']
-
 class CartSerializer(serializers.ModelSerializer):
-    food_name = serializers.CharField(source='food.item_name')
-    food_price = serializers.CharField(source='food.item_price')
-    food_image = serializers.SerializerMethodField()
+     food = FoodSerializer()
+     
+     class Meta:
+         model = Order
+         fields = ['id', 'food', 'quantity']
 
-    class Meta:
-        model = Order
-        fields = ['id', 'food_name', 'food_price', 'food_image', 'quantity']
-
-    def get_food_image(self, obj):
-        request = self.context.get('request')
-        if obj.food and obj.food.image:
-            try:
-                return request.build_absolute_uri(obj.food.image.url)
-            except:
-                return None
-        return None
 
 
 class MyOrdersListSerializer(serializers.ModelSerializer):
