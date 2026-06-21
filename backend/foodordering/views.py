@@ -188,6 +188,7 @@ def add_to_cart(request):
         user = User.objects.get(id=user_id)
         food = Food.objects.get(id=food_id)
 
+
         order,created = Order.objects.get_or_create (
             user = user,
             food = food,
