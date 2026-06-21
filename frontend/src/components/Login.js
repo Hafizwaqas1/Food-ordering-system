@@ -43,11 +43,13 @@ const Login = () => {
           });
     
           const result = await response.json();
-    
+          console.log("LOGIN RESPONSE:", result);
+           
           if (response.status === 200) {
             toast.success(result.message || "You have successfully login");
             localStorage.setItem('userId', result.userId);
             localStorage.setItem('userName', result.userName);
+            console.log(localStorage.getItem("userId"));
             setFormData({
               emailcont: "",
               password: "",
