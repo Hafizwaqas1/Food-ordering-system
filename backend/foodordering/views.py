@@ -188,8 +188,6 @@ def add_to_cart(request):
         user = User.objects.get(id=user_id)
         food = Food.objects.get(id=food_id)
 
-        # if Order.objects.filter(uaer = user, food = food, is_order_placed=False,).exists()
-
         order,created = Order.objects.get_or_create (
             user = user,
             food = food,

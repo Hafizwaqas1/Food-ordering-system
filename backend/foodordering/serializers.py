@@ -2,10 +2,25 @@ from rest_framework import serializers
 from .models import *
 
 
-class CategorySerializer(serializers.ModelSerializer):
+# class CategorySerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Category
+#         fields = ['id', 'category_name', 'creation_date']
+
+class CartSerializer(serializers.ModelSerializer):
+    food_name = serializers.CharField(source='food.item_name')
+    food_price = serializers.CharField(source='food.item_price')
+    food_image = serializers.SerializerMethodField()
+
     class Meta:
-        model = Category
-        fields = ['id', 'category_name', 'creation_date']
+        model = Order
+        fields = ['id', 'food_name', 'food_price', 'food_image', 'quantity']
+
+    def get_food_image(self, obj):
+        request = self.context.get('request')
+        if obj.food.image:
+            return request.build_absolute_uri(obj.food.image.url) if request else obj.food.image.url
+        return None
 
 
 
