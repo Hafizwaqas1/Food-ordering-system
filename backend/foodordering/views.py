@@ -288,9 +288,8 @@ def place_order(request):
 
         
         return Response({"message":f'Order placed successfully! Order No: {order_number}'},status=201)
-    except:
-                return Response({"message":"Something went wrong",},status=404)
-       
+    except Exception as e:
+        return Response({"error": str(e)}, status=500)   
     
 
 
