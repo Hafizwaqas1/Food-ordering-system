@@ -206,12 +206,28 @@ def add_to_cart(request):
                 return Response({"message":"Something went wrong",},status=404)
     
 
-
 @api_view(['GET'])
 def cart_items(request, user_id):
-    orders = Order.objects.filter(user_id=user_id, is_order_placed=False).select_related('food')
-    serializer = CartSerializer(orders,many=True,  context={'request': request}) 
+    orders = Order.objects.filter(
+        user_id=user_id,
+        is_order_placed=False
+    )
+
+    serializer = CartSerializer(
+        orders,
+        many=True,
+        context={'request': request}
+    )
+
     return Response(serializer.data)
+    
+
+
+# @api_view(['GET'])
+# def cart_items(request, user_id):
+#     orders = Order.objects.filter(user_id=user_id, is_order_placed=False).select_related('food')
+#     serializer = CartSerializer(orders,many=True,  context={'request': request}) 
+#     return Response(serializer.data)
 
 
 

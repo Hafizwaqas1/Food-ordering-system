@@ -38,10 +38,12 @@ class CartSerializer(serializers.ModelSerializer):
 
     def get_food_image(self, obj):
         request = self.context.get('request')
-        if obj.food.image:
-            return request.build_absolute_uri(obj.food.image.url) if request else obj.food.image.url
+        if obj.food and obj.food.image:
+            try:
+                return request.build_absolute_uri(obj.food.image.url)
+            except:
+                return None
         return None
-
 
 
 class MyOrdersListSerializer(serializers.ModelSerializer):
