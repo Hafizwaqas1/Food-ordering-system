@@ -8,56 +8,85 @@ const PaymentPage = () => {
   const userId = localStorage.getItem("userId");
   const [paymentMode, setPaymentMode] = useState("");
   const [address, setAddress] = useState("");
-  const [cardDetails, setCardDetails] = useState({
-    cardNumber: "",
-    expiry: "",
-    cvv: "",
-  });
+  // const [cardDetails, setCardDetails] = useState({
+  //   cardNumber: "",
+  //   expiry: "",
+  //   cvv: "",
+  // });
 
   const navigate = useNavigate();
 
-  const handlePlaceOrder = async () => {
-    if (paymentMode === "online") {
-      const { cardNumber, expiry, cvv } = cardDetails;
+  // const handlePlaceOrder = async () => {
+  //   if (paymentMode === "online") {
+  //     const { cardNumber, expiry, cvv } = cardDetails;
 
-      if (!cardNumber || !expiry || !cvv) {
-        toast.error("Please fill in all card details");
-        return;
-      }
-    }
+  //     if (!cardNumber || !expiry || !cvv) {
+  //       toast.error("Please fill in all card details");
+  //       return;
+  //     }
+  //   }
 
-    try {
-      const response = await fetch(
-        "https://hafiz899.pythonanywhere.com/api/place_order/",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            userId: userId,
-            address: address,
-            paymentMode: paymentMode,
-            cardNumber: paymentMode === "online" ? cardDetails.cardNumber : "",
-            expiry: paymentMode === "online" ? cardDetails.expiry : "",
-            cvv: paymentMode === "online" ? cardDetails.cvv : "",
-          }),
+  //   try {
+  //     const response = await fetch(
+  //       "https://hafiz899.pythonanywhere.com/api/place_order/",
+  //       {
+  //         method: "POST",
+  //         headers: { "Content-Type": "application/json" },
+  //         body: JSON.stringify({
+  //           userId: userId,
+  //           address: address,
+  //           paymentMode: paymentMode,
+  //           cardNumber: paymentMode === "online" ? cardDetails.cardNumber : "",
+  //           expiry: paymentMode === "online" ? cardDetails.expiry : "",
+  //           cvv: paymentMode === "online" ? cardDetails.cvv : "",
+  //         }),
+  //       },
+  //     );
+
+  //     const result = await response.json();
+
+  //     if (response.status === 201) {
+  //       toast.success(result.message);
+  //       setTimeout(() => {
+  //         navigate("/my-orders");
+  //       }, 2000);
+  //     } else {
+  //       toast.error(result.message || "Something went wrong");
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //     toast.error("Error connecting to server");
+  //   }
+  // };
+    
+   const handlePlaceOrder = async () => {
+  try {
+    const response = await fetch(
+      "https://hafiz899.pythonanywhere.com/api/create-checkout-session/",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
-
-      const result = await response.json();
-
-      if (response.status === 201) {
-        toast.success(result.message);
-        setTimeout(() => {
-          navigate("/my-orders");
-        }, 2000);
-      } else {
-        toast.error(result.message || "Something went wrong");
+        body: JSON.stringify({
+          userId: userId,
+          address: address,
+        }),
       }
-    } catch (error) {
-      console.error(error);
-      toast.error("Error connecting to server");
+    );
+
+    const data = await response.json();
+
+    if (data.url) {
+      window.location.href = data.url; // redirect to Stripe checkout
+    } else {
+      toast.error("Failed to start payment session");
     }
-  };
+  } catch (error) {
+    console.error(error);
+    toast.error("Server error");
+  }
+};
 
   return (
     <PublicLayout>
