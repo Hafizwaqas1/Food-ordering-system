@@ -60,6 +60,8 @@ const PaymentPage = () => {
   // };
     
    const handlePlaceOrder = async () => {
+      alert("Stripe code running");
+
   try {
     const response = await fetch(
       "https://hafiz899.pythonanywhere.com/api/create-checkout-session/",
