@@ -849,8 +849,8 @@ def create_checkout_session(request):
                 }
             ],
             mode='payment',
-            success_url='http://localhost:3000/payment-success',
-            cancel_url='http://localhost:3000/payment-cancel',
+            success_url='https://food-ordering-system-d9og7tm6s-hafizwaqas899-8012s-projects.vercel.app/payment-success',
+            cancel_url='https://food-ordering-system-d9og7tm6s-hafizwaqas899-8012s-projects.vercel.app/payment-cancel',
         )
 
         return Response({
