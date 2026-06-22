@@ -133,7 +133,7 @@ const PaymentPage = () => {
             <label className="form-check-label">Online Payment</label>
           </div>
 
-          {paymentMode === "online" && (
+          {/* {paymentMode === "online" && (
             <div className="row">
               <div className="col-md-6">
                 <label className="form-label">Card Number</label>
@@ -174,7 +174,7 @@ const PaymentPage = () => {
                 />
               </div>
             </div>
-          )}
+          )} */}
           <button
             className="btn btn-success mt-4 w-100"
             onClick={handlePlaceOrder}
