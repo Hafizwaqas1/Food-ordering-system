@@ -269,6 +269,12 @@ def place_order(request):
 
         order_number = make_unique_order_number()
 
+        if not order.exists():
+          return Response(
+            {"message": "Cart is empty"},
+              status=400
+    )
+
         order.update(order_number=order_number, is_order_placed=True)
 
         OrderAddress.objects.create (
