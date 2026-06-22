@@ -59,7 +59,5 @@ urlpatterns = [
     path('food-rating/<int:food_id>/', food_rating_summary),
     path('all-reviews/', all_reviews),
     path('delete-reviews/<int:id>/', delete_review),
-
-    # path('create-session/', create_checkout_session),
-
+    path('create-checkout-session/', create_checkout_session),
 ]

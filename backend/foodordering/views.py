@@ -802,6 +802,65 @@ def delete_review(request,id):
         return Response({"message":"Review deleted successfully"},status=200)
      except Review.DoesNotExist:
           return Response({"message":"Review not found"},status=404)
+     
+
+
+
+import stripe
+from django.conf import settings
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
+@api_view(['POST'])
+def create_checkout_session(request):
+    user_id = request.data.get('userId')
+
+    try:
+        orders = Order.objects.filter(
+            user_id=user_id,
+            is_order_placed=False
+        )
+
+        if not orders.exists():
+            return Response(
+                {"error": "Cart is empty"},
+                status=400
+            )
+
+        total_amount = 0
+
+        for order in orders:
+            total_amount += (
+                order.food.item_price * order.quantity
+            )
+
+        session = stripe.checkout.Session.create(
+            payment_method_types=['card'],
+            line_items=[
+                {
+                    'price_data': {
+                        'currency': 'usd',
+                        'product_data': {
+                            'name': 'Food Order',
+                        },
+                        'unit_amount': int(total_amount * 100),
+                    },
+                    'quantity': 1,
+                }
+            ],
+            mode='payment',
+            success_url='http://localhost:3000/payment-success',
+            cancel_url='http://localhost:3000/payment-cancel',
+        )
+
+        return Response({
+            'url': session.url
+        })
+
+    except Exception as e:
+        return Response({
+            'error': str(e)
+        }, status=500)
           
 
 
