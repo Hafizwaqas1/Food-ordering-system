@@ -59,61 +59,19 @@ const PaymentPage = () => {
   //   }
   // };
     
-   const handlePlaceOrder = async () => {
+  const handlePlaceOrder = async () => {
 
-  if (!address.trim()) {
-    toast.error("Please enter delivery address");
-    return;
-  }
+  console.log("Payment Mode:", paymentMode);
 
   if (!paymentMode) {
     toast.error("Please select payment method");
     return;
   }
 
-  try {
+  if (paymentMode === "online") {
+    console.log("ONLINE PAYMENT SELECTED");
 
-    // ==========================
-    // CASH ON DELIVERY
-    // ==========================
-    if (paymentMode === "cod") {
-
-      const response = await fetch(
-        "https://hafiz899.pythonanywhere.com/api/place_order/",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            userId: userId,
-            address: address,
-            paymentMode: "cod",
-          }),
-        }
-      );
-
-      const data = await response.json();
-
-      if (response.ok) {
-        toast.success("Order placed successfully");
-
-        setTimeout(() => {
-          navigate("/my-orders");
-        }, 1500);
-
-      } else {
-        toast.error(data.message || "Failed to place order");
-      }
-
-      return;
-    }
-
-    // ==========================
-    // STRIPE PAYMENT
-    // ==========================
-    if (paymentMode === "online") {
-
+    try {
       const response = await fetch(
         "https://hafiz899.pythonanywhere.com/api/create-checkout-session/",
         {
@@ -122,24 +80,63 @@ const PaymentPage = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            userId: userId,
-            address: address,
+            userId,
+            address,
           }),
         }
       );
 
       const data = await response.json();
 
+      console.log(data);
+
       if (data.url) {
         window.location.href = data.url;
-      } else {
-        toast.error("Failed to start Stripe payment");
+        return;
       }
-    }
 
-  } catch (error) {
-    console.error(error);
-    toast.error("Server error");
+      toast.error("Stripe URL not received");
+      return;
+
+    } catch (error) {
+      console.error(error);
+      toast.error("Stripe Error");
+      return;
+    }
+  }
+
+  // COD ONLY
+  if (paymentMode === "cod") {
+
+    console.log("COD SELECTED");
+
+    try {
+      const response = await fetch(
+        "https://hafiz899.pythonanywhere.com/api/place_order/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId,
+            address,
+            paymentMode: "cod",
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        navigate("/my-orders");
+      } else {
+        toast.error(data.message);
+      }
+
+    } catch (error) {
+      console.error(error);
+    }
   }
 };
 
@@ -231,6 +228,7 @@ const PaymentPage = () => {
             </div>
           )} */}
           <button
+            type="button"
             className="btn btn-success mt-4 w-100"
             onClick={handlePlaceOrder}
           >
