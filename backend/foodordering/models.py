@@ -33,32 +33,71 @@ class Food(models.Model):
     def __str__(self):
         return f"{self.item_name} ({self.item_quantity})"
     
-    
 
 
 class Order(models.Model):
-    user = models.ForeignKey(User,on_delete=models.CASCADE)
-    food = models.ForeignKey(Food,on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField(default=1)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    order_number = models.CharField(max_length=100, unique=True, null=True)
     is_order_placed = models.BooleanField(default=False)
-    order_number = models.CharField(max_length=100,null=True)
+    payment_status = models.CharField(max_length=20, default="pending")
+    created_at = models.DateTimeField(auto_now_add=True)
 
-    
     def __str__(self):
-        return f"{self.order_number} ({self.user})"
-    
+        return str(self.order_number)   
+
+
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    food = models.ForeignKey(Food, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+
+    def __str__(self):
+        return f"{self.order.order_number}"  
+
 
 
 class OrderAddress(models.Model):
-    user = models.ForeignKey(User,on_delete=models.CASCADE)
-    order_number = models.CharField(max_length=100,null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
     address = models.TextField()
     order_time = models.DateTimeField(auto_now_add=True)
-    order_final_status = models.CharField(max_length=200,null=True)
+
+    def __str__(self):
+        return self.order.order_number   
+
+
+import uuid
+
+def generate_order_number():
+    return str(uuid.uuid4()).split("-")[0].upper()        
+    
+    
+
+
+# class Order(models.Model):
+#     user = models.ForeignKey(User,on_delete=models.CASCADE)
+#     food = models.ForeignKey(Food,on_delete=models.CASCADE)
+#     quantity = models.PositiveIntegerField(default=1)
+#     is_order_placed = models.BooleanField(default=False)
+#     order_number = models.CharField(max_length=100,null=True)
 
     
-    def __str__(self):
-        return f"{self.order_number} ({self.user})"
+#     def __str__(self):
+#         return f"{self.order_number} ({self.user})"
+    
+
+
+# class OrderAddress(models.Model):
+#     user = models.ForeignKey(User,on_delete=models.CASCADE)
+#     order_number = models.CharField(max_length=100,null=True)
+#     address = models.TextField()
+#     order_time = models.DateTimeField(auto_now_add=True)
+#     order_final_status = models.CharField(max_length=200,null=True)
+
+    
+#     def __str__(self):
+#         return f"{self.order_number} ({self.user})"
     
 
 

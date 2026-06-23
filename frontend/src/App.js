@@ -35,6 +35,7 @@ import { WishlistProvider } from './context/WishlistContext';
 import Wishlist from './pages/Wishlist';
 import TrackOrders from './pages/TrackOrders';
 import ManageReviews from './pages/ManageReviews';
+import PaymentSuccess from './pages/PaymentSuccess';
 
 
 function App() {
@@ -83,6 +84,7 @@ function App() {
           <Route path="/profile" element={<ProfilePage/>}></Route>
           <Route path="/wishlist" element={<Wishlist/>}></Route>
           <Route path="/change-password" element={<ChangePassword/>}></Route>
+          <Route path="/payment-success" element={<PaymentSuccess />} />
         </Routes>
     </BrowserRouter>
     </CartProvider>

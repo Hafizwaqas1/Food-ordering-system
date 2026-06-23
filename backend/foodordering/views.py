@@ -254,65 +254,125 @@ def make_unique_order_number():
     
 
 
+# @api_view(['POST'])
+# def place_order(request):
+#     user_id = request.data.get('userId')
+#     address = request.data.get('address')
+#     payment_mode = request.data.get('paymentMode')
+#     card_number = request.data.get('cardNumber')
+#     expiry = request.data.get('expiry')
+#     cvv = request.data.get('cvv')
+
+
+#     try:
+#         order = Order.objects.filter(user_id=user_id, is_order_placed=False)
+
+#         order_number = make_unique_order_number()
+
+#         if not order.exists():
+#           return Response(
+#             {"message": "Cart is empty"},
+#               status=400
+#     )
+
+#         order.update(order_number=order_number, is_order_placed=True)
+
+#         OrderAddress.objects.create (
+#              user_id = user_id,
+#              order_number = order_number,
+#              address = address
+#         )
+
+#         PaymentDetail.objects.create (
+#              user_id = user_id,
+#              order_number = order_number,
+#              payment_mode = payment_mode,
+#              card_number = card_number if payment_mode == 'online' else None,
+#              expiry_date = expiry if payment_mode == 'online' else None,
+#              cvv = cvv if payment_mode == 'online' else None,
+#         )
+
+        
+#         return Response({"message":f'Order placed successfully! Order No: {order_number}'},status=201)
+#     except Exception as e:
+#         return Response({"error": str(e)}, status=500)   
+    
+
 @api_view(['POST'])
 def place_order(request):
     user_id = request.data.get('userId')
     address = request.data.get('address')
     payment_mode = request.data.get('paymentMode')
-    card_number = request.data.get('cardNumber')
-    expiry = request.data.get('expiry')
-    cvv = request.data.get('cvv')
-
 
     try:
-        order = Order.objects.filter(user_id=user_id, is_order_placed=False)
+        cart_items = Order.objects.filter(user_id=user_id, is_order_placed=False)
 
-        order_number = make_unique_order_number()
+        if not cart_items.exists():
+            return Response({"message": "Cart is empty"}, status=400)
 
-        if not order.exists():
-          return Response(
-            {"message": "Cart is empty"},
-              status=400
-    )
+        order_number = generate_order_number()
 
-        order.update(order_number=order_number, is_order_placed=True)
-
-        OrderAddress.objects.create (
-             user_id = user_id,
-             order_number = order_number,
-             address = address
+        # UPDATE ALL CART ITEMS AS FINAL ORDER
+        cart_items.update(
+            is_order_placed=True,
+            order_number=order_number,
+            payment_status="cod" if payment_mode == "cod" else "pending"
         )
 
-        PaymentDetail.objects.create (
-             user_id = user_id,
-             order_number = order_number,
-             payment_mode = payment_mode,
-             card_number = card_number if payment_mode == 'online' else None,
-             expiry_date = expiry if payment_mode == 'online' else None,
-             cvv = cvv if payment_mode == 'online' else None,
+        OrderAddress.objects.create(
+            user_id=user_id,
+            order=cart_items.first(),  # safe link
+            address=address
         )
 
-        
-        return Response({"message":f'Order placed successfully! Order No: {order_number}'},status=201)
+        PaymentDetail.objects.create(
+            user_id=user_id,
+            order_number=order_number,
+            payment_mode=payment_mode
+        )
+
+        return Response({
+            "message": "Order placed successfully",
+            "order_number": order_number
+        }, status=201)
+
     except Exception as e:
-        return Response({"error": str(e)}, status=500)   
+        return Response({"error": str(e)}, status=500)
     
 
+# @api_view(['GET'])
+# def user_orders(request, user_id):
+#     orders = OrderAddress.objects.filter(user_id=user_id).order_by('-id')
+#     serializer = MyOrdersListSerializer(orders,many=True) 
+#     return Response(serializer.data)
 
 @api_view(['GET'])
 def user_orders(request, user_id):
-    orders = OrderAddress.objects.filter(user_id=user_id).order_by('-id')
-    serializer = MyOrdersListSerializer(orders,many=True) 
+    orders = Order.objects.filter(
+        user_id=user_id,
+        is_order_placed=True
+    ).order_by('-id')
+
+    serializer = OrderSerializer(orders, many=True)
     return Response(serializer.data)
 
 
+
+# @api_view(['GET'])
+# def order_details(request, order_number):
+#     orders = Order.objects.filter(order_number=order_number,is_order_placed=True).select_related('food')
+#     serializer = OrderSerializer(orders,many=True) 
+#     return Response(serializer.data)
 
 @api_view(['GET'])
 def order_details(request, order_number):
-    orders = Order.objects.filter(order_number=order_number,is_order_placed=True).select_related('food')
-    serializer = OrderSerializer(orders,many=True) 
-    return Response(serializer.data)
+    orders = Order.objects.filter(
+        order_number=order_number,
+        is_order_placed=True
+    ).select_related('food')
 
+    serializer = OrderSerializer(orders, many=True)
+    return Response(serializer.data)
 
 
 @api_view(['GET'])
@@ -811,67 +871,152 @@ from django.conf import settings
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
+# @api_view(['POST'])
+# def create_checkout_session(request):
+#     user_id = request.data.get('userId')
+
+#     try:
+#         orders = Order.objects.filter(
+#             user_id=user_id,
+#             is_order_placed=False
+#         )
+
+#         if not orders.exists():
+#             return Response(
+#                 {"error": "Cart is empty"},
+#                 status=400
+#             )
+
+#         total_amount = 0
+
+#         for order in orders:
+#             total_amount += (
+#                 order.food.item_price * order.quantity
+#             )
+
+#         session = stripe.checkout.Session.create(
+#             payment_method_types=['card'],
+#             line_items=[
+#                 {
+#                     'price_data': {
+#                         'currency': 'usd',
+#                         'product_data': {
+#                             'name': 'Food Order',
+#                         },
+#                         'unit_amount': int(total_amount * 100),
+#                     },
+#                     'quantity': 1,
+#                 }
+#             ],
+#             mode='payment',
+#             success_url='https://food-ordering-system-d9og7tm6s-hafizwaqas899-8012s-projects.vercel.app/payment-success',
+#             cancel_url='https://food-ordering-system-d9og7tm6s-hafizwaqas899-8012s-projects.vercel.app/payment-cancel',
+#         )
+
+#         return Response({
+#             'url': session.url
+#         })
+
+#     except Exception as e:
+#         return Response({
+#             'error': str(e)
+#         }, status=500)
+          
+
 @api_view(['POST'])
 def create_checkout_session(request):
+    user_id = request.data.get('userId')
+    address = request.data.get('address')
+
+    try:
+        cart_items = Order.objects.filter(user_id=user_id, is_order_placed=False)
+
+        if not cart_items.exists():
+            return Response({"error": "Cart is empty"}, status=400)
+
+        # 1. CREATE ORDER (PENDING)
+        order = Order.objects.create(
+            user_id=user_id,
+            order_number=generate_order_number(),
+            is_order_placed=False,
+            payment_status="pending"
+        )
+
+        # 2. COPY ITEMS
+        total_amount = 0
+        for item in cart_items:
+            OrderItem.objects.create(
+                order=order,
+                food=item.food,
+                quantity=item.quantity
+            )
+            total_amount += item.food.item_price * item.quantity
+
+        # 3. STRIPE SESSION
+        session = stripe.checkout.Session.create(
+    payment_method_types=['card'],
+    line_items=[{
+        'price_data': {
+            'currency': 'usd',
+            'product_data': {'name': 'Food Order'},
+            'unit_amount': int(total_amount * 100),
+        },
+        'quantity': 1,
+    }],
+    mode='payment',
+            success_url=f"https://food-ordering-system-d9og7tm6s-hafizwaqas899-8012s-projects.vercel.app/payment-success?order_number={order.order_number}&userId={user_id}",
+            cancel_url='https://food-ordering-system-d9og7tm6s-hafizwaqas899-8012s-projects.vercel.app/payment-cancel',
+        )
+
+        # 4. ADDRESS
+        OrderAddress.objects.create(
+            user_id=user_id,
+            order=order,
+            address=address
+        )
+
+        return Response({
+            "url": session.url,
+            "order_number": order.order_number
+        })
+
+    except Exception as e:
+        return Response({"error": str(e)}, status=500)
+    
+
+
+@api_view(['POST'])
+def stripe_success_confirm(request):
+    order_number = request.data.get('order_number')
     user_id = request.data.get('userId')
 
     try:
         orders = Order.objects.filter(
             user_id=user_id,
-            is_order_placed=False
+            order_number=order_number,
+            is_order_placed=True
         )
 
         if not orders.exists():
-            return Response(
-                {"error": "Cart is empty"},
-                status=400
-            )
+            return Response({"error": "Order not found"}, status=404)
 
-        total_amount = 0
+        # already processed
+        if orders.first().payment_status == "paid":
+            return Response({"message": "Already confirmed"}, status=200)
 
-        for order in orders:
-            total_amount += (
-                order.food.item_price * order.quantity
-            )
+        # mark paid
+        orders.update(payment_status="paid")
 
-        session = stripe.checkout.Session.create(
-            payment_method_types=['card'],
-            line_items=[
-                {
-                    'price_data': {
-                        'currency': 'usd',
-                        'product_data': {
-                            'name': 'Food Order',
-                        },
-                        'unit_amount': int(total_amount * 100),
-                    },
-                    'quantity': 1,
-                }
-            ],
-            mode='payment',
-            success_url='https://food-ordering-system-d9og7tm6s-hafizwaqas899-8012s-projects.vercel.app/payment-success',
-            cancel_url='https://food-ordering-system-d9og7tm6s-hafizwaqas899-8012s-projects.vercel.app/payment-cancel',
+        PaymentDetail.objects.create(
+            user_id=user_id,
+            order_number=order_number,
+            payment_mode="online"
         )
 
-        return Response({
-            'url': session.url
-        })
+        return Response({"message": "Payment confirmed"}, status=200)
 
     except Exception as e:
-        return Response({
-            'error': str(e)
-        }, status=500)
-          
-
-
-
-
-
-
-
-           
-        
-   
+        return Response({"error": str(e)}, status=500)   
 
 
 

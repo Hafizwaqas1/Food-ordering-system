@@ -9,15 +9,27 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 
-class FoodSerializer(serializers.ModelSerializer):
-    category_name = serializers.CharField(source='category.category_name',read_only=True)
+# class FoodSerializer(serializers.ModelSerializer):
+#     category_name = serializers.CharField(source='category.category_name',read_only=True)
 
-    # update any other field then image
-    image =serializers.ImageField(required=False)
-    is_available = serializers.BooleanField(required=False,default=True) 
-    class Meta:
+#     # update any other field then image
+#     image =serializers.ImageField(required=False)
+#     is_available = serializers.BooleanField(required=False,default=True) 
+#     class Meta:
+#         model = Food
+#         fields = ['id', 'category', 'category_name', 'item_name', 'item_price', 'item_description', 'image', 'item_quantity', 'is_available']
+
+class FoodSerializer(serializers.ModelSerializer):
+      class Meta:
         model = Food
-        fields = ['id', 'category', 'category_name', 'item_name', 'item_price', 'item_description', 'image', 'item_quantity', 'is_available'] 
+        fields = '__all__'
+
+class OrderItemSerializer(serializers.ModelSerializer):
+      food = FoodSerializer()
+
+      class Meta:
+        model = OrderItem
+        fields = ['id', 'food', 'quantity']     
 
 
 class CartSerializer(serializers.ModelSerializer):

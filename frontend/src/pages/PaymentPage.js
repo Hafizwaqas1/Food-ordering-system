@@ -60,30 +60,83 @@ const PaymentPage = () => {
   // };
     
    const handlePlaceOrder = async () => {
-      alert("Stripe code running");
+
+  if (!address.trim()) {
+    toast.error("Please enter delivery address");
+    return;
+  }
+
+  if (!paymentMode) {
+    toast.error("Please select payment method");
+    return;
+  }
 
   try {
-    const response = await fetch(
-      "https://hafiz899.pythonanywhere.com/api/create-checkout-session/",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: userId,
-          address: address,
-        }),
+
+    // ==========================
+    // CASH ON DELIVERY
+    // ==========================
+    if (paymentMode === "cod") {
+
+      const response = await fetch(
+        "https://hafiz899.pythonanywhere.com/api/place_order/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId: userId,
+            address: address,
+            paymentMode: "cod",
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        toast.success("Order placed successfully");
+
+        setTimeout(() => {
+          navigate("/my-orders");
+        }, 1500);
+
+      } else {
+        toast.error(data.message || "Failed to place order");
       }
-    );
 
-    const data = await response.json();
-
-    if (data.url) {
-      window.location.href = data.url; // redirect to Stripe checkout
-    } else {
-      toast.error("Failed to start payment session");
+      return;
     }
+
+    // ==========================
+    // STRIPE PAYMENT
+    // ==========================
+    if (paymentMode === "online") {
+
+      const response = await fetch(
+        "https://hafiz899.pythonanywhere.com/api/create-checkout-session/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId: userId,
+            address: address,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        toast.error("Failed to start Stripe payment");
+      }
+    }
+
   } catch (error) {
     console.error(error);
     toast.error("Server error");
