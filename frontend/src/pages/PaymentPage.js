@@ -58,87 +58,84 @@ const PaymentPage = () => {
   //     toast.error("Error connecting to server");
   //   }
   // };
-    
+
   const handlePlaceOrder = async () => {
+    console.log("Payment Mode:", paymentMode);
 
-  console.log("Payment Mode:", paymentMode);
+    if (!paymentMode) {
+      toast.error("Please select payment method");
+      return;
+    }
+    console.log("Before Condition:", paymentMode);
+    alert(paymentMode);
+    if (paymentMode === "online") {
+      console.log("ONLINE PAYMENT SELECTED");
 
-  if (!paymentMode) {
-    toast.error("Please select payment method");
-    return;
-  }
-
-  if (paymentMode === "online") {
-    console.log("ONLINE PAYMENT SELECTED");
-
-    try {
-      const response = await fetch(
-        "https://hafiz899.pythonanywhere.com/api/create-checkout-session/",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
+      try {
+        const response = await fetch(
+          "https://hafiz899.pythonanywhere.com/api/create-checkout-session/",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              userId,
+              address,
+            }),
           },
-          body: JSON.stringify({
-            userId,
-            address,
-          }),
+        );
+
+        const data = await response.json();
+
+        console.log(data);
+
+        if (data.url) {
+          window.location.href = data.url;
+          return;
         }
-      );
 
-      const data = await response.json();
-
-      console.log(data);
-
-      if (data.url) {
-        window.location.href = data.url;
+        toast.error("Stripe URL not received");
+        return;
+      } catch (error) {
+        console.error(error);
+        toast.error("Stripe Error");
         return;
       }
-
-      toast.error("Stripe URL not received");
-      return;
-
-    } catch (error) {
-      console.error(error);
-      toast.error("Stripe Error");
-      return;
     }
-  }
 
-  // COD ONLY
-  if (paymentMode === "cod") {
+    // COD ONLY
+    if (paymentMode === "cod") {
+      console.log("COD SELECTED");
 
-    console.log("COD SELECTED");
-
-    try {
-      const response = await fetch(
-        "https://hafiz899.pythonanywhere.com/api/place_order/",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
+      try {
+        const response = await fetch(
+          "https://hafiz899.pythonanywhere.com/api/place_order/",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              userId,
+              address,
+              paymentMode: "cod",
+            }),
           },
-          body: JSON.stringify({
-            userId,
-            address,
-            paymentMode: "cod",
-          }),
+        );
+
+        const data = await response.json();
+
+        if (response.ok) {
+          navigate("/my-orders");
+        } else {
+          toast.error(data.message);
         }
-      );
-
-      const data = await response.json();
-
-      if (response.ok) {
-        navigate("/my-orders");
-      } else {
-        toast.error(data.message);
+      } catch (error) {
+        console.error(error);
       }
-
-    } catch (error) {
-      console.error(error);
     }
-  }
-};
+  };
 
   return (
     <PublicLayout>
@@ -168,7 +165,10 @@ const PaymentPage = () => {
               required
               value="cod"
               checked={paymentMode === "cod"}
-              onChange={() => setPaymentMode("cod")}
+              onChange={() => {
+                console.log("COD SELECTED");
+                setPaymentMode("cod");
+              }}
             />
             <label className="form-check-label">Cash on Delivery</label>
           </div>
@@ -180,7 +180,10 @@ const PaymentPage = () => {
               value="online"
               required
               checked={paymentMode === "online"}
-              onChange={() => setPaymentMode("online")}
+              onChange={() => {
+                console.log("ONLINE SELECTED");
+                setPaymentMode("online");
+              }}
             />
             <label className="form-check-label">Online Payment</label>
           </div>
@@ -227,6 +230,7 @@ const PaymentPage = () => {
               </div>
             </div>
           )} */}
+          <p>Current Payment Mode: {paymentMode}</p>
           <button
             type="button"
             className="btn btn-success mt-4 w-100"
