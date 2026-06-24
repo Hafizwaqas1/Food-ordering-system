@@ -202,8 +202,9 @@ def add_to_cart(request):
             order.save()
 
         return Response({"message":"Food added to cart successfully"},status=200)
-    except:
-                return Response({"message":"Something went wrong",},status=404)
+    except Exception as e:
+      print("ERROR:", e)
+      return Response({"message": str(e)}, status=400)
     
 
 
