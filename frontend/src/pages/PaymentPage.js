@@ -230,7 +230,7 @@ const PaymentPage = () => {
               </div>
             </div>
           )} */}
-          <h1 style={{ color: "red" }}>VERSION TEST 999</h1>
+          <h1 style={{ color: "red" }}>VERSION TEST 1000</h1>
           <button
             type="button"
             className="btn btn-success mt-4 w-100"
