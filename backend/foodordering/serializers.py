@@ -29,15 +29,24 @@ class OrderItemSerializer(serializers.ModelSerializer):
 
       class Meta:
         model = OrderItem
-        fields = ['id', 'food', 'quantity']     
+        fields = ['id', 'food', 'quantity']  
+
 
 
 class CartSerializer(serializers.ModelSerializer):
-     food = FoodSerializer()
+    food = FoodSerializer()
+
+    class Meta:
+        model = OrderItem
+        fields = ['id', 'food', 'quantity']           
+
+
+# class CartSerializer(serializers.ModelSerializer):
+#      food = FoodSerializer()
      
-     class Meta:
-         model = Order
-         fields = ['id', 'food', 'quantity']
+#      class Meta:
+#          model = Order
+#          fields = ['id', 'food', 'quantity']
 
 
 

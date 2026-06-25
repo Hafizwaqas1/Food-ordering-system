@@ -178,72 +178,167 @@ def food_detail(request, id):
     return Response(serializer.data)
 
 
-
 @api_view(['POST'])
 def add_to_cart(request):
-    user_id = request.data.get('userId')
-    food_id = request.data.get('foodId')
+    user_id = request.data.get("userId")
+    food_id = request.data.get("foodId")
 
     try:
         user = User.objects.get(id=user_id)
         food = Food.objects.get(id=food_id)
 
-
-        order,created = Order.objects.get_or_create (
-            user = user,
-            food = food,
-            is_order_placed = False,
-            # quantity = 1,
-            defaults = {'quantity':1}
+        order, created = Order.objects.get_or_create(
+            user=user,
+            is_order_placed=False,
+            defaults={
+                "order_number": generate_order_number()
+            }
         )
 
-        if not created:
-            order.quantity += 1
-            order.save()
+        order_item, item_created = OrderItem.objects.get_or_create(
+            order=order,
+            food=food,
+            defaults={
+                "quantity": 1
+            }
+        )
 
-        return Response({"message":"Food added to cart successfully"},status=200)
+        if not item_created:
+            order_item.quantity += 1
+            order_item.save()
+
+        return Response(
+            {"message": "Food added to cart successfully"},
+            status=200
+        )
+
     except Exception as e:
-      print("ERROR:", e)
-      return Response({"message": str(e)}, status=400)
+        return Response(
+            {"message": str(e)},
+            status=400
+        )
     
-
 
 @api_view(['GET'])
 def cart_items(request, user_id):
-    orders = Order.objects.filter(user_id=user_id, is_order_placed=False).select_related('food')
-    serializer = CartSerializer(orders,many=True) 
-    return Response(serializer.data)
+    items = OrderItem.objects.filter(
+        order__user_id=user_id,
+        order__is_order_placed=False
+    ).select_related('food')
+
+    serializer = CartSerializer(items, many=True)
+    return Response(serializer.data)  
 
 
 
 @api_view(['PUT'])
 def update_cart(request):
-    order_id = request.data.get('orderId')
-    quantity = request.data.get('quantity')
+    order_id = request.data.get("orderId")
+    quantity = request.data.get("quantity")
 
     try:
-        order = Order.objects.get(id=order_id, is_order_placed=False)
-        order.quantity = quantity
-        order.save()
+        item = OrderItem.objects.get(id=order_id)
 
+        item.quantity = quantity
+        item.save()
 
-        return Response({"message":"Quantity updated successfully"},status=200)
-    except:
-                return Response({"message":"Something went wrong",},status=404)
+        return Response(
+            {"message": "Quantity updated successfully"},
+            status=200
+        )
+
+    except Exception as e:
+        return Response(
+            {"message": str(e)},
+            status=400
+        )
     
 
 
 @api_view(['DELETE'])
-def delete_cart_item(request,order_id):
-
+def delete_cart_item(request, order_id):
     try:
-        order = Order.objects.get(id=order_id, is_order_placed=False)
-        order.delete()
+        item = OrderItem.objects.get(id=order_id)
+        item.delete()
+
+        return Response(
+            {"message": "Deleted successfully"},
+            status=200
+        )
+
+    except Exception as e:
+        return Response(
+            {"message": str(e)},
+            status=400
+        )    
 
 
-        return Response({"message":"Item deleted from cart"},status=200)
-    except:
-                return Response({"message":"Something went wrong",},status=404)
+
+# @api_view(['POST'])
+# def add_to_cart(request):
+#     user_id = request.data.get('userId')
+#     food_id = request.data.get('foodId')
+
+#     try:
+#         user = User.objects.get(id=user_id)
+#         food = Food.objects.get(id=food_id)
+
+
+#         order,created = Order.objects.get_or_create (
+#             user = user,
+#             food = food,
+#             is_order_placed = False,
+#             # quantity = 1,
+#             defaults = {'quantity':1}
+#         )
+
+#         if not created:
+#             order.quantity += 1
+#             order.save()
+
+#         return Response({"message":"Food added to cart successfully"},status=200)
+#     except Exception as e:
+#       print("ERROR:", e)
+#       return Response({"message": str(e)}, status=400)
+    
+
+
+# @api_view(['GET'])
+# def cart_items(request, user_id):
+#     orders = Order.objects.filter(user_id=user_id, is_order_placed=False).select_related('food')
+#     serializer = CartSerializer(orders,many=True) 
+#     return Response(serializer.data)
+
+
+
+# @api_view(['PUT'])
+# def update_cart(request):
+#     order_id = request.data.get('orderId')
+#     quantity = request.data.get('quantity')
+
+#     try:
+#         order = Order.objects.get(id=order_id, is_order_placed=False)
+#         order.quantity = quantity
+#         order.save()
+
+
+#         return Response({"message":"Quantity updated successfully"},status=200)
+#     except:
+#                 return Response({"message":"Something went wrong",},status=404)
+    
+
+
+# @api_view(['DELETE'])
+# def delete_cart_item(request,order_id):
+
+#     try:
+#         order = Order.objects.get(id=order_id, is_order_placed=False)
+#         order.delete()
+
+
+#         return Response({"message":"Item deleted from cart"},status=200)
+#     except:
+#                 return Response({"message":"Something went wrong",},status=404)
     
 
 
