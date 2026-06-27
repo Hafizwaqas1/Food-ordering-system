@@ -63,13 +63,22 @@ class MyOrdersListSerializer(serializers.ModelSerializer):
 
 
 
+# class OrderSerializer(serializers.ModelSerializer):
+#     food = FoodSerializer()
+#     class Meta:
+#         model = Order
+#         fields = ['food', 'quantity']
+
 class OrderSerializer(serializers.ModelSerializer):
-    food = FoodSerializer()
+    items = serializers.SerializerMethodField()
+
     class Meta:
         model = Order
-        fields = ['food', 'quantity']
+        fields = ['order_number', 'created_at', 'payment_status', 'items']
 
-
+    def get_items(self, obj):
+        order_items = OrderItem.objects.filter(order=obj)
+        return CartSerializer(order_items, many=True).data
 
 
 class OrderAddressSerializer(serializers.ModelSerializer):

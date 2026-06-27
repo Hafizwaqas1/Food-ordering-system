@@ -453,11 +453,10 @@ def user_orders(request, user_id):
     orders = Order.objects.filter(
         user_id=user_id,
         is_order_placed=True
-    ).order_by('-id')
+    ).order_by('-created_at')
 
     serializer = OrderSerializer(orders, many=True)
     return Response(serializer.data)
-
 
 
 # @api_view(['GET'])
