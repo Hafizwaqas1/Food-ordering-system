@@ -486,10 +486,20 @@ def order_details(request, order_number):
 
 @api_view(['GET'])
 def get_order_address(request, order_number):
-    address = OrderAddress.objects.get(order_number=order_number)
-    serializer = OrderAddressSerializer(address) 
-    return Response(serializer.data)
+    try:
+        address = OrderAddress.objects.get(
+            order__order_number=order_number
+        )
 
+        serializer = OrderAddressSerializer(address)
+
+        return Response(serializer.data)
+
+    except OrderAddress.DoesNotExist:
+        return Response(
+            {"message": "Address not found"},
+            status=404
+        )
 
 
 def get_invoice(request,order_number):
