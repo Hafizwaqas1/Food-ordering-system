@@ -16,7 +16,10 @@ const MyOrders = () => {
 
     fetch(`https://hafiz899.pythonanywhere.com/api/orders/${userId}/`)
       .then((res) => res.json())
-      .then((data) => setOrders(data));
+      .then((data) => {
+         console.log(data);
+         setOrders(data);
+      });
   }, [userId, navigate]);
 
  const getStatusBadge = (status = "") => {
