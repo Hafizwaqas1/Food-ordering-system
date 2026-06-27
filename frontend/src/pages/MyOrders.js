@@ -19,11 +19,11 @@ const MyOrders = () => {
       .then((data) => setOrders(data));
   }, [userId, navigate]);
 
-  const getStatusBadge = (status) => {
+ const getStatusBadge = (status = "") => {
     if (!status) return "secondary";
 
-    const s = status.toLowerCase();
-
+    const statusLower = status.toLowerCase();
+     
     if (s.includes("delivered")) return "success";
     if (s.includes("cancelled")) return "danger";
     if (s.includes("confirmed")) return "info";
