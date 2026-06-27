@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import authenticate
 from rest_framework.decorators import api_view, parser_classes
@@ -502,31 +503,43 @@ def get_order_address(request, order_number):
         )
 
 
-def get_invoice(request,order_number):
-        
-    orders = Order.objects.filter(order_number=order_number,is_order_placed=True).select_related('food')
-    address = OrderAddress.objects.get(order_number=order_number)
+def get_invoice(request, order_number):
+    try:
+        order = Order.objects.get(
+            order_number=order_number,
+            is_order_placed=True
+        )
 
-    grand_total = 0
-    order_data = []
+        address = OrderAddress.objects.get(order=order)
 
-    for order in orders:
-         total_price = order.food.item_price * order.quantity
+        order_items = OrderItem.objects.filter(order=order).select_related("food")
 
-         grand_total+= total_price
-         order_data.append({
-              'food': order.food,
-              'quantity': order.quantity,
-              'total_price': total_price
-         })
+        grand_total = 0
+        order_data = []
 
-    return render(request, 'invoice.html',{
-              'order_number': order_number,
-              'address': address,
-              'grand_total': grand_total,
-              'orders': order_data
-         })
+        for item in order_items:
+            total_price = item.food.item_price * item.quantity
+            grand_total += total_price
 
+            order_data.append({
+                "food": item.food,
+                "quantity": item.quantity,
+                "total_price": total_price,
+            })
+
+        return render(
+            request,
+            "invoice.html",
+            {
+                "order_number": order.order_number,
+                "address": address,
+                "grand_total": grand_total,
+                "orders": order_data,
+            },
+        )
+
+    except Exception as e:
+        return HttpResponse(str(e), status=500)
 
 
 @api_view(['GET'])
