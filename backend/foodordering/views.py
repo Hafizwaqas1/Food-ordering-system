@@ -396,28 +396,32 @@ def make_unique_order_number():
 
 @api_view(['POST'])
 def place_order(request):
-    user_id = request.data.get('userId')
-    address = request.data.get('address')
-    payment_mode = request.data.get('paymentMode')
+    user_id = request.data.get("userId")
+    address = request.data.get("address")
+    payment_mode = request.data.get("paymentMode")
 
     try:
-        cart_items = Order.objects.filter(user_id=user_id, is_order_placed=False)
+        order = Order.objects.filter(
+            user_id=user_id,
+            is_order_placed=False
+        ).first()
 
-        if not cart_items.exists():
-            return Response({"message": "Cart is empty"}, status=400)
+        if not order:
+            return Response(
+                {"message": "Cart is empty"},
+                status=400
+            )
 
         order_number = generate_order_number()
 
-        # UPDATE ALL CART ITEMS AS FINAL ORDER
-        cart_items.update(
-            is_order_placed=True,
-            order_number=order_number,
-            payment_status="cod" if payment_mode == "cod" else "pending"
-        )
+        order.order_number = order_number
+        order.is_order_placed = True
+        order.payment_status = payment_mode
+        order.save()
 
         OrderAddress.objects.create(
             user_id=user_id,
-            order=cart_items.first(),  # safe link
+            order=order,
             address=address
         )
 
@@ -430,11 +434,13 @@ def place_order(request):
         return Response({
             "message": "Order placed successfully",
             "order_number": order_number
-        }, status=201)
+        })
 
     except Exception as e:
-        return Response({"error": str(e)}, status=500)
-    
+        return Response(
+            {"error": str(e)},
+            status=500
+        )    
 
 # @api_view(['GET'])
 # def user_orders(request, user_id):
