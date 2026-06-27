@@ -20,17 +20,17 @@ const MyOrders = () => {
   }, [userId, navigate]);
 
  const getStatusBadge = (status = "") => {
-    if (!status) return "secondary";
-
     const statusLower = status.toLowerCase();
-     
-    if (s.includes("delivered")) return "success";
-    if (s.includes("cancelled")) return "danger";
-    if (s.includes("confirmed")) return "info";
-    if (s.includes("prepared")) return "warning";
+
+    if (statusLower.includes("delivered")) return "success";
+    if (statusLower.includes("cancelled")) return "danger";
+    if (statusLower.includes("confirmed")) return "info";
+    if (statusLower.includes("prepared")) return "warning";
+    if (statusLower.includes("cod")) return "primary";
+    if (statusLower.includes("pending")) return "warning";
 
     return "secondary";
-  };
+};
 
   return (
     <PublicLayout>
@@ -68,7 +68,7 @@ const MyOrders = () => {
 
                 <hr />
 
-                {order.items.map((item) => (
+                {order.items?.map((item) => (
 
                   <div
                     key={item.id}
