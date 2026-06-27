@@ -467,13 +467,21 @@ def user_orders(request, user_id):
 
 @api_view(['GET'])
 def order_details(request, order_number):
-    orders = Order.objects.filter(
-        order_number=order_number,
-        is_order_placed=True
-    ).select_related('food')
+    try:
+        order = Order.objects.get(
+            order_number=order_number,
+            is_order_placed=True
+        )
 
-    serializer = OrderSerializer(orders, many=True)
-    return Response(serializer.data)
+        serializer = OrderSerializer(order)
+
+        return Response(serializer.data)
+
+    except Order.DoesNotExist:
+        return Response(
+            {"message": "Order not found"},
+            status=404
+        )
 
 
 @api_view(['GET'])
