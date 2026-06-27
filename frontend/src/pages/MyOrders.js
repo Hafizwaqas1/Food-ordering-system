@@ -1,78 +1,126 @@
-import React, { useEffect, useState } from 'react'
-import PublicLayout from '../components/PublicLayout'
-import { Link, useNavigate } from 'react-router-dom';
-import { FaBoxOpen, FaInfoCircle, FaMapMarkedAlt } from 'react-icons/fa';
+import React, { useEffect, useState } from "react";
+import PublicLayout from "../components/PublicLayout";
+import { Link, useNavigate } from "react-router-dom";
+import { FaBoxOpen, FaInfoCircle, FaMapMarkedAlt } from "react-icons/fa";
 
 const MyOrders = () => {
-    const userId = localStorage.getItem("userId");
-      const [orders, setOrders] = useState([]);
-    
-      const navigate = useNavigate();
-    
-      useEffect(() => {
-        if (!userId) {
-          navigate("/login");
-          return;
-        }
-        fetch(`https://hafiz899.pythonanywhere.com/api/orders/${userId}/`)
-          .then((res) => res.json())
-          .then((data) => {
-            setOrders(data);
-          });
-      }, [userId]);
+  const userId = localStorage.getItem("userId");
+  const [orders, setOrders] = useState([]);
+  const navigate = useNavigate();
 
-      const getStatusBadge = (status) => {
-        const statusLower = status.toLowerCase();
-        if (statusLower.includes("delivered")) return 'success';
-        if (statusLower.includes("cancelled")) return 'danger';
-        if (statusLower.includes("confirmed")) return 'info';
-        if (statusLower.includes("prepared")) return 'warning';
-        return 'secondary';
-      }
-      
+  useEffect(() => {
+    if (!userId) {
+      navigate("/login");
+      return;
+    }
+
+    fetch(`https://hafiz899.pythonanywhere.com/api/orders/${userId}/`)
+      .then((res) => res.json())
+      .then((data) => setOrders(data));
+  }, [userId, navigate]);
+
+  const getStatusBadge = (status) => {
+    if (!status) return "secondary";
+
+    const s = status.toLowerCase();
+
+    if (s.includes("delivered")) return "success";
+    if (s.includes("cancelled")) return "danger";
+    if (s.includes("confirmed")) return "info";
+    if (s.includes("prepared")) return "warning";
+
+    return "secondary";
+  };
+
   return (
     <PublicLayout>
-    <div className='container py-5'>
-       <h3 className='text-center mb-4'><FaBoxOpen className='text-warning me-2' size={50}/>My Orders</h3>
+      <div className="container py-5">
 
-       {orders.length === 0 ? (
-        <p className='text-center text-muted'>You have not placed any order yet.</p>
-       ) : (
-        orders.map((order,index) => (
-            <div className='card mb-4 shadow-sm' key={index}>
-                <div className='card-body d-flex align-items-center flex-wrap'>
-                   <div className='me-2'>
-                      <FaBoxOpen className='text-warning' size={50} />
-                   </div>
-                   <div className='flex-grow-1'>
-                    <h5 className='mb-1'>
-                        <Link>
-                          Order # {order.order_number}
-                        </Link>
-                        </h5>
-                        <p className='text-muted mb-1'>
-                            <strong>Date: </strong> {new Date(order.order_time).toLocaleString()}
-                        </p>
-                        <span className={`badge bg-${getStatusBadge(order.order_final_status)}`}>{order.order_final_status}</span>
-                   </div>
-                   <div className='mt-3 mt-md-0'>
-                      <Link to={`/track-order/${order.order_number}`} className='btn btn-outline-secondary btn-sm me-2'>
-                        <FaMapMarkedAlt/>
-                         Track
-                      </Link>
-                      <Link className='btn btn-outline-primary btn-sm me-2' to={`/order-details/${order.order_number}`}>
-                        <FaInfoCircle/>
-                         View Details
-                      </Link>
-                   </div>
-                </div>
+        <h3 className="text-center mb-4">
+          <FaBoxOpen className="text-warning me-2" size={50}/>
+          My Orders
+        </h3>
+
+        {orders.length === 0 ? (
+          <p className="text-center">No Orders Found.</p>
+        ) : (
+
+          orders.map((order) => (
+
+            <div className="card mb-4 shadow-sm" key={order.order_number}>
+
+              <div className="card-body">
+
+                <h5>Order #{order.order_number}</h5>
+
+                <p>
+                  <strong>Date:</strong>{" "}
+                  {new Date(order.created_at).toLocaleString()}
+                </p>
+
+                <p>
+                  <strong>Payment:</strong> {order.payment_status}
+                </p>
+
+                <span className={`badge bg-${getStatusBadge(order.payment_status)}`}>
+                  {order.payment_status}
+                </span>
+
+                <hr />
+
+                {order.items.map((item) => (
+
+                  <div
+                    key={item.id}
+                    className="d-flex align-items-center mb-3"
+                  >
+
+                    <img
+                      src={`https://hafiz899.pythonanywhere.com${item.food.image}`}
+                      width="80"
+                      alt={item.food.item_name}
+                      className="me-3"
+                    />
+
+                    <div className="flex-grow-1">
+
+                      <h6>{item.food.item_name}</h6>
+
+                      <div>Quantity : {item.quantity}</div>
+
+                      <div>Rs. {item.food.item_price}</div>
+
+                    </div>
+
+                  </div>
+
+                ))}
+
+                <Link
+                  to={`/track-order/${order.order_number}`}
+                  className="btn btn-outline-secondary me-2"
+                >
+                  <FaMapMarkedAlt /> Track
+                </Link>
+
+                <Link
+                  to={`/order-details/${order.order_number}`}
+                  className="btn btn-outline-primary"
+                >
+                  <FaInfoCircle /> Details
+                </Link>
+
+              </div>
+
             </div>
-        ))
 
-       )}
-    </div>
+          ))
+
+        )}
+
+      </div>
     </PublicLayout>
-  )
-}
+  );
+};
 
-export default MyOrders
+export default MyOrders;
